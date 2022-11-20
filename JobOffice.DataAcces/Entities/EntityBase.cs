@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace JobOffice.DataAcces.Entities
 {
-    public class Employee: EntityBase
+    public abstract class EntityBase
     {
-        
-        public string? Surname { get; set; }
-        public int ContactID { get; set; }
+        [Key]
+        public int Id { get; set; }
     }
 }
