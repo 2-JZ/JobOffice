@@ -15,6 +15,11 @@ namespace JobOffice.DataAcces.Entities
         [MaxLength(100)]
         public string? Surname { get; set; }
         
-        public int? ContactID { get; set; }
+        //public int? ContactID { get; set; }
+
+        public List <Project> Projects { get; set; }
+        public Contact Contacts { get; set; }
+        public int ContactId { get; set; }
+
     }
 }
