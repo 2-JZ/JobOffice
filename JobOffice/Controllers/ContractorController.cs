@@ -19,5 +19,11 @@ namespace JobOffice.Controllers
         [HttpGet]
         [Route("")]
         public IEnumerable<Contractor> GetAllContractors() => this.contractorRepository.GetAll();
+
+        [HttpGet]
+        [Route("{ContractorId}")]
+        public Contractor GetContractorById(int ContractorId) => this.contractorRepository.GetById(ContractorId);
+
+
     }
 }

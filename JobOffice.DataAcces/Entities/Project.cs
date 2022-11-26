@@ -12,8 +12,7 @@ namespace JobOffice.DataAcces.Entities
         [Required]
         public string ProjectName { get; set; }
         public List<Employee> Employees { get; set; }
-        public int? ContractorId { get; set; }
-        public Contractor? Contractor { get; set; }
+        public List<Contractor> Contractors { get; set; }
 
 
     }

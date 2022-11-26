@@ -5,7 +5,9 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOffice", "JobOffice.csproj", "{F5A7FF65-EF60-40D7-99F0-D239B149C69B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobOffice.DataAcces", "..\JobOffice.DataAcces\JobOffice.DataAcces.csproj", "{F491B5A5-3638-4A06-9A3B-109891AC0147}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOffice.DataAcces", "..\JobOffice.DataAcces\JobOffice.DataAcces.csproj", "{F491B5A5-3638-4A06-9A3B-109891AC0147}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobOffice.ApplicationServices", "..\JobOffice.ApplicationServices\JobOffice.ApplicationServices.csproj", "{0B9301C5-CA17-4DA7-8425-CFF1581976E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F491B5A5-3638-4A06-9A3B-109891AC0147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F491B5A5-3638-4A06-9A3B-109891AC0147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F491B5A5-3638-4A06-9A3B-109891AC0147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B9301C5-CA17-4DA7-8425-CFF1581976E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B9301C5-CA17-4DA7-8425-CFF1581976E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B9301C5-CA17-4DA7-8425-CFF1581976E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B9301C5-CA17-4DA7-8425-CFF1581976E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

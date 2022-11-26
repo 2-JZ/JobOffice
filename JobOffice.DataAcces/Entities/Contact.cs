@@ -10,7 +10,7 @@ namespace JobOffice.DataAcces.Entities
     {
         public int Telephone { get; set; }
         public Employee Employees { get; set; }
-        public Contractor Contractors { get; set; }
+        public List<Contractor> Contractors { get; set; }
 
     
     }
