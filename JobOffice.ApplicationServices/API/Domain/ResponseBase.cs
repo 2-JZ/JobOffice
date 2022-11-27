@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    internal class ResponseBase
+    public class ResponseBase<T>
     {
+        public T Data { get; set; }
     }
 }

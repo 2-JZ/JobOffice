@@ -1,5 +1,7 @@
 using JobOffice.DataAcces;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 string connectionString = builder.Configuration.GetConnectionString("JobOfficeConnection");
@@ -18,6 +20,8 @@ builder.Services.AddSwaggerGen();
 //    (opt => opt.UseSqlServer(connectionString: "JobOfficeConnection"));
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+//builder.Services.AddMediatR(typeof(Program));         Unncomment, while problem.
 
 
 var app = builder.Build();

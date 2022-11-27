@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    internal class GetEmployeesRequest
+    public class GetEmployeesRequest : IRequest<GetEmployeesResponse>
     {
     }
 }

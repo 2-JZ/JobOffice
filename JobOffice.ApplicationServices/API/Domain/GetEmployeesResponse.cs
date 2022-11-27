@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    internal class GetEmployeesResponse
+    public class GetEmployeesResponse
     {
     }
 }
