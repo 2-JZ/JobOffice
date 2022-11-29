@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JobOffice.ApplicationServices\JobOffice.ApplicationServices.csproj" />
     <ProjectReference Include="..\JobOffice.DataAcces\JobOffice.DataAcces.csproj" />
   </ItemGroup>
 

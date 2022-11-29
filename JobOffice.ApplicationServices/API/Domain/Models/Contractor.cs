@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain.Models
 {
-    internal class Contractor
+    public class Contractor
     {
     }
 }

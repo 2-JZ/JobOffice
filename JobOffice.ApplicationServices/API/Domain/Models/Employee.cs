@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain.Models
 {
-    internal class Employee
+    public class Employee
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
