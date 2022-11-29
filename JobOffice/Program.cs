@@ -1,3 +1,4 @@
+using JobOffice.ApplicationServices.API.Domain.Handlers;
 using JobOffice.DataAcces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +21,8 @@ builder.Services.AddSwaggerGen();
 //    (opt => opt.UseSqlServer(connectionString: "JobOfficeConnection"));
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-//builder.Services.AddMediatR(typeof(Program));         Unncomment, while problem.
+//builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(typeof(GetEmployeesHandler));         //Unncomment, while problem.
 
 
 var app = builder.Build();
