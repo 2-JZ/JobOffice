@@ -7,31 +7,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using AutoMapper;
 
 namespace JobOffice.ApplicationServices.API.Domain.Handlers
 {
     public class GetEmployeesHandler : IRequestHandler<GetEmployeesRequest, GetEmployeesResponse>
     {
         private readonly IRepository<Employee> employeeRepository;
-        public GetEmployeesHandler(IRepository<Employee> employeeRepository)
+        private readonly IMapper mapper;
+
+        public GetEmployeesHandler(IRepository<Employee> employeeRepository, IMapper mapper)
         {
             this.employeeRepository = employeeRepository;
+            this.mapper = mapper;
 
         }
         public Task<GetEmployeesResponse> Handle(GetEmployeesRequest request, CancellationToken cancellationToken)
         {
             var employees = this.employeeRepository.GetAll();
-            var domainEmployees = employees.Select(x => new Domain.Models.Employee()
-            {
-                Id = x.Id,
-                Name = x.Name
-            });
+            var mappedEmployees = this.mapper.Map<List<Domain.Models.Employee>>(employees);
+            
+            //var domainEmployees = employees.Select(x => new Domain.Models.Employee()
+            //{
+            //    Id = x.Id,
+            //    Name = x.Name
+            //});
 
         
             
             var response = new GetEmployeesResponse()
             {
-                Data = domainEmployees.ToList()
+                Data = mappedEmployees
             };
             
             return Task.FromResult(response);
