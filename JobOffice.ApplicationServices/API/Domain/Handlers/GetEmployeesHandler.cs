@@ -22,9 +22,9 @@ namespace JobOffice.ApplicationServices.API.Domain.Handlers
             this.mapper = mapper;
 
         }
-        public Task<GetEmployeesResponse> Handle(GetEmployeesRequest request, CancellationToken cancellationToken)
+        public async Task<GetEmployeesResponse> Handle(GetEmployeesRequest request, CancellationToken cancellationToken)
         {
-            var employees = this.employeeRepository.GetAll();
+            var employees = await this.employeeRepository.GetAll();
             var mappedEmployees = this.mapper.Map<List<Domain.Models.Employee>>(employees);
             
             //var domainEmployees = employees.Select(x => new Domain.Models.Employee()
@@ -33,14 +33,12 @@ namespace JobOffice.ApplicationServices.API.Domain.Handlers
             //    Name = x.Name
             //});
 
-        
-            
             var response = new GetEmployeesResponse()
             {
                 Data = mappedEmployees
             };
             
-            return Task.FromResult(response);
+            return response;
         }
     }
 }
