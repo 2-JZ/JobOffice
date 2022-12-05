@@ -8,23 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using AutoMapper;
+using JobOffice.DataAcces.CQRS.Queries;
 
 namespace JobOffice.ApplicationServices.API.Domain.Handlers
 {
     public class GetEmployeesHandler : IRequestHandler<GetEmployeesRequest, GetEmployeesResponse>
     {
-        private readonly IRepository<Employee> employeeRepository;
         private readonly IMapper mapper;
+        private readonly IQueryExecutor queryExecutor;
 
-        public GetEmployeesHandler(IRepository<Employee> employeeRepository, IMapper mapper)
+        public GetEmployeesHandler(IQueryExecutor queryExecutor, IMapper mapper)
         {
-            this.employeeRepository = employeeRepository;
             this.mapper = mapper;
+            this.queryExecutor = queryExecutor;
 
         }
         public async Task<GetEmployeesResponse> Handle(GetEmployeesRequest request, CancellationToken cancellationToken)
         {
-            var employees = await this.employeeRepository.GetAll();
+            var query = new GetEmployeesQuery();
+            var employees = await this.queryExecutor.Execute(query);
             var mappedEmployees = this.mapper.Map<List<Domain.Models.Employee>>(employees);
             
             //var domainEmployees = employees.Select(x => new Domain.Models.Employee()

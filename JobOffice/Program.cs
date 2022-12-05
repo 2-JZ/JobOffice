@@ -25,7 +25,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 //builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(typeof(GetEmployeesHandler));         //Unncomment, while problem.
 builder.Services.AddAutoMapper(typeof(EmployeesProfile).Assembly);
-
+builder.Services.AddTransient<IQueryExecutor, QueryExecutor>();
 
 var app = builder.Build();
 
