@@ -1,6 +1,7 @@
 using JobOffice.ApplicationServices.API.Domain.Handlers;
 using JobOffice.ApplicationServices.Mappings;
 using JobOffice.DataAcces;
+using JobOffice.DataAcces.CQRS;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -26,6 +27,8 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddMediatR(typeof(GetEmployeesHandler));         //Unncomment, while problem.
 builder.Services.AddAutoMapper(typeof(EmployeesProfile).Assembly);
 builder.Services.AddTransient<IQueryExecutor, QueryExecutor>();
+builder.Services.AddTransient<ICommandExecutor, CommandExecutor>();
+
 
 var app = builder.Build();
 

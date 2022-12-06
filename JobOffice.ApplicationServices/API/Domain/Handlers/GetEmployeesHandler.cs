@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using AutoMapper;
 using JobOffice.DataAcces.CQRS.Queries;
+using JobOffice.DataAcces.CQRS;
 
 namespace JobOffice.ApplicationServices.API.Domain.Handlers
 {

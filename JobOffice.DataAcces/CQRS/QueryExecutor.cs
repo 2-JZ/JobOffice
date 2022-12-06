@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JobOffice.DataAcces
+namespace JobOffice.DataAcces.CQRS
 {
     public class QueryExecutor : IQueryExecutor
     {

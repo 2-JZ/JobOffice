@@ -1,29 +1,33 @@
-﻿//using JobOffice.DataAcces;
-//using JobOffice.DataAcces.Entities;
-//using Microsoft.AspNetCore.Mvc;
+﻿using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.DataAcces;
+using JobOffice.DataAcces.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-//namespace JobOffice.Controllers
-//{
-//    [ApiController]
-//    [Route("[controller]")]
-//    public class ContractorController : ControllerBase
-//    { 
+namespace JobOffice.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class ContractorController : ControllerBase
+    {
 
-//        private readonly IRepository<Contractor> contractorRepository;
-//        public ContractorController(IRepository<Contractor> contractorRepository)
-//        {
-//            this.contractorRepository=contractorRepository;
+        private readonly IMediator mediator;
+        public ContractorController(IMediator mediator)
+        {
+            this.mediator = mediator ;
 
-//        }
+        }
 
-//        [HttpGet]
-//        [Route("")]
-//        public IEnumerable<Contractor> GetAllContractors() => this.contractorRepository.GetAll();
+        [HttpPost]
+        [Route("")]
+        public async Task<IActionResult> AddContractor([FromBody] AddContractorRequest request)
+        {
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+        }
 
-//        [HttpGet]
-//        [Route("{ContractorId}")]
-//        public Contractor GetContractorById(int ContractorId) => this.contractorRepository.GetById(ContractorId);
+        
 
 
-//    }
-//}
+    }
+}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class GetContractorRequest
+    public class AddContractorRequest : IRequest<AddContractorResponse>
     {
+        public string Name { get; set; }
+
     }
 }

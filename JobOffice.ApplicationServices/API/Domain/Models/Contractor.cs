@@ -8,5 +8,9 @@ namespace JobOffice.ApplicationServices.API.Domain.Models
 {
     public class Contractor
     {
+        public int ContactId { get; set; }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
