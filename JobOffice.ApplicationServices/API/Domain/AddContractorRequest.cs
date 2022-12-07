@@ -10,6 +10,8 @@ namespace JobOffice.ApplicationServices.API.Domain
     public class AddContractorRequest : IRequest<AddContractorResponse>
     {
         public string Name { get; set; }
+        public int ContactId { get; set; }
+
 
     }
 }

@@ -15,11 +15,14 @@ namespace JobOffice.ApplicationServices.Mappings
         {
 
             this.CreateMap<AddContractorRequest, JobOffice.DataAcces.Entities.Contractor>()
-                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name));
+                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+                .ForMember(x => x.ContactId, y => y.MapFrom(z => z.ContactId));
 
             this.CreateMap<JobOffice.DataAcces.Entities.Contractor, Contractor>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
-                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name));
+                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+                .ForMember(x => x.ContactId, y => y.MapFrom(z => z.ContactId));
+
 
         }
     }
