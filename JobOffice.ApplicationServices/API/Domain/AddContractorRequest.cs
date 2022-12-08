@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain
-{
+{   
     public class AddContractorRequest : IRequest<AddContractorResponse>
     {
         public string Name { get; set; }
