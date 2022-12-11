@@ -31,9 +31,9 @@ namespace JobOffice.DataAcces
             return entities.ToListAsync();
         }
 
-        public Task <T> GetById(int id)
+        public async Task <T> GetById(int id)
         {
-            return entities.SingleOrDefaultAsync(x => x.Id == id);
+            return await entities.SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public Task Insert(T entity)

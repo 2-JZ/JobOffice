@@ -3,6 +3,7 @@ using JobOffice.ApplicationServices.Mappings;
 using JobOffice.DataAcces;
 using JobOffice.DataAcces.CQRS;
 using MediatR;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -28,7 +29,12 @@ builder.Services.AddMediatR(typeof(GetEmployeesHandler));         //Unncomment, 
 builder.Services.AddAutoMapper(typeof(EmployeesProfile).Assembly);
 builder.Services.AddTransient<IQueryExecutor, QueryExecutor>();
 builder.Services.AddTransient<ICommandExecutor, CommandExecutor>();
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.PropertyNameCaseInsensitive = true;
+    options.SerializerOptions.AllowTrailingCommas = true;
 
+});
 
 var app = builder.Build();
 
@@ -36,7 +42,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        //options.RoutePrefix = string.Empty;
+
+    });
 }
 
 app.UseHttpsRedirection();
