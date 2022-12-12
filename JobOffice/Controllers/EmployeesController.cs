@@ -23,7 +23,7 @@ namespace JobOffice.Controllers
         }
         [HttpGet]
         [Route("{employeeId}")]
-        public async Task<IActionResult> GetById( int employeeId)
+        public async Task<IActionResult> GetById([FromRoute] int employeeId)
         {
             var request = new GetEmployeeByIdRequest()
             {
@@ -31,6 +31,18 @@ namespace JobOffice.Controllers
             };
             var response = await this.mediator.Send(request);
             return this.Ok(response);
-        } 
+        }
+        [HttpDelete]
+        [Route("{employeeId}")]
+        public async Task<IActionResult> Delete([FromRoute] int employeeId)
+        {
+            var request = new DeleteEmployeeRequest()
+            {
+                EmployeeId = employeeId
+            };
+            
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+        }
     }
 }
