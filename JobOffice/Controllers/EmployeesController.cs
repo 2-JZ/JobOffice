@@ -40,7 +40,14 @@ namespace JobOffice.Controllers
             {
                 EmployeeId = employeeId
             };
-            
+
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+        }
+        [HttpPut]
+        [Route("{employeeId}")]
+        public async Task<IActionResult> Put([FromBody] UpdateEmployeeByIdRequest request)
+        {
             var response = await this.mediator.Send(request);
             return this.Ok(response);
         }
