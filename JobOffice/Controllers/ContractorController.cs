@@ -22,6 +22,10 @@ namespace JobOffice.Controllers
         [Route("")]
         public async Task<IActionResult> AddContractor([FromBody] AddContractorRequest request)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest("BAD REQUEST");
+            }
             var response = await this.mediator.Send(request);
             return this.Ok(response);
         }

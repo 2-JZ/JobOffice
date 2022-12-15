@@ -1,9 +1,12 @@
+using FluentValidation.AspNetCore;
+using JobOffice.ApplicationServices.API.Domain;
 using JobOffice.ApplicationServices.API.Domain.Handlers;
 using JobOffice.ApplicationServices.Mappings;
 using JobOffice.DataAcces;
 using JobOffice.DataAcces.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -29,12 +32,19 @@ builder.Services.AddMediatR(typeof(GetEmployeesHandler));         //Unncomment, 
 builder.Services.AddAutoMapper(typeof(EmployeesProfile).Assembly);
 builder.Services.AddTransient<IQueryExecutor, QueryExecutor>();
 builder.Services.AddTransient<ICommandExecutor, CommandExecutor>();
-builder.Services.Configure<JsonOptions>(options =>
-{
-    options.SerializerOptions.PropertyNameCaseInsensitive = true;
-    options.SerializerOptions.AllowTrailingCommas = true;
+//builder.Services.Configure<JsonOptions>(options =>
+//{
+//    options.SerializerOptions.PropertyNameCaseInsensitive = true;
+//    options.SerializerOptions.AllowTrailingCommas = true;
 
+//});
+builder.Services.AddMvcCore()
+    .AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<AddContractorRequest>());
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
 });
+
 
 var app = builder.Build();
 
