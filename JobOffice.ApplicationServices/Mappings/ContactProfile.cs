@@ -16,11 +16,9 @@ namespace JobOffice.ApplicationServices.Mappings
             this.CreateMap<AddContactRequest, JobOffice.DataAcces.Entities.Contact>()
                 .ForMember(x => x.Telephone, y => y.MapFrom(z => z.Telephone));
 
-            //this.CreateMap<JobOffice.DataAcces.Entities.Contact, Contact>()
+            this.CreateMap<JobOffice.DataAcces.Entities.Contact, Contact>()
 
-            //    .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
-            //    .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
-            //    .ForMember(x => x.ContactId, y => y.MapFrom(z => z.ContactId));
+                .ForMember(x => x.Telephone, y => y.MapFrom(z => z.Telephone));
         }
             
     }

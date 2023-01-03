@@ -9,8 +9,8 @@ namespace JobOffice.ApplicationServices.API.Handlers
 {
     public class AddContactHandler: IRequestHandler<AddContactRequest, AddContactResponse>
     {
-        ICommandExecutor commandExecutor;
-        IMapper mapper;
+        private readonly ICommandExecutor commandExecutor;
+        private readonly IMapper mapper;
 
         public AddContactHandler(IMapper mapper, ICommandExecutor commandExecutor)
         {
@@ -24,6 +24,7 @@ namespace JobOffice.ApplicationServices.API.Handlers
             var contact = this.mapper.Map<Contact>(request);
             var command = new AddContactCommand() { Parameter = contact };
             var contactFromDb = await this.commandExecutor.Execute(command);
+            
             return new AddContactResponse()
             {
                 Data = this.mapper.Map<JobOffice.ApplicationServices.API.Domain.Models.Contact>(contactFromDb)

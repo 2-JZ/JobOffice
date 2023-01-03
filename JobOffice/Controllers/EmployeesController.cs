@@ -51,5 +51,12 @@ namespace JobOffice.Controllers
             var response = await this.mediator.Send(request);
             return this.Ok(response);
         }
+        [HttpPost]
+        [Route("")]
+        public async Task<IActionResult> AddEmployee([FromBody] AddEmployeeRequest request)
+        {
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+        }
     }
 }
