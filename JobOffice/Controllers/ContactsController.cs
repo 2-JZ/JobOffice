@@ -54,6 +54,15 @@ namespace JobOffice.Controllers
             return this.Ok(response);
 
         }
+        [HttpPut]
+        [Route("{contactId}")]
+        public async Task<IActionResult> PutContact([FromBody] PutContactRequest request)
+        {
+            //request = new PutContactRequest();
+            
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+        }
 
     }
 }
