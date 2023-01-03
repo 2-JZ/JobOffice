@@ -45,6 +45,15 @@ namespace JobOffice.Controllers
             return this.Ok(response);
 
         }
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetContacts([FromQuery] GetContactsRequest request)
+        {
+            request = new GetContactsRequest();
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+
+        }
 
     }
 }
