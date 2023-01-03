@@ -49,6 +49,14 @@ namespace JobOffice.Controllers
             var response = await this.mediator.Send(request);
             return this.Ok(response);
         }
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetProjects([FromQuery] GetProjectsRequest request)
+        {
+            request = new GetProjectsRequest();
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+        }
 
 
 

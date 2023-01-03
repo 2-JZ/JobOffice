@@ -30,7 +30,6 @@ namespace JobOffice.ApplicationServices.API.Handlers
                 Data = this.mapper.Map<List<Contact>>(contactsFromDb)
             };
             
-            throw new NotImplementedException();
         }
     }
 }
