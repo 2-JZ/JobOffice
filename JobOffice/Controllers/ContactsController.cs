@@ -22,5 +22,29 @@ namespace JobOffice.Controllers
             var response = await this.mediator.Send(request);
             return this.Ok(response);
         }
+        [HttpDelete]
+        [Route("{contactId}")]
+        public async Task<IActionResult> DeleteContact([FromRoute] int contactId)
+        {
+            var request = new DeleteContactRequest()
+            {
+                Id = contactId
+            };
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+        }
+        [HttpGet]
+        [Route("{contactId}")]
+        public async Task<IActionResult> GetContactById([FromRoute] int contactId)
+        {
+            var request = new GetContactByIdRequest()
+            {
+                Id = contactId
+            };
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+
+        }
+
     }
 }

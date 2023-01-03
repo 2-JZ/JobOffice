@@ -17,6 +17,9 @@ namespace JobOffice.ApplicationServices.Mappings
             this.CreateMap<AddProjectRequest, JobOffice.DataAcces.Entities.Project>()
                 .ForMember(x => x.ProjectName, y => y.MapFrom(z => z.ProjectName));
 
+            this.CreateMap<DeleteProjectRequest, JobOffice.DataAcces.Entities.Project>()
+                .ForMember(x => x.Id, y => y.MapFrom(z => z.Id));
+
             this.CreateMap<JobOffice.DataAcces.Entities.Project, Project>()
                 .ForMember(x => x.ProjectName, y => y.MapFrom(z => z.ProjectName));
 

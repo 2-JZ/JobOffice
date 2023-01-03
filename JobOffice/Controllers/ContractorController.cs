@@ -30,8 +30,30 @@ namespace JobOffice.Controllers
             return this.Ok(response);
         }
 
-        
+        [HttpDelete]
+        [Route("{contractorId}")]
+        public async Task<IActionResult> DeleteContractor([FromRoute] int contractorId)
+        {
+            var request = new DeleteContractorRequest()
+            {
+                Id = contractorId
+            };
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+        }
 
+        [HttpGet]
+        [Route("{contractorId}")]
+        public async Task<IActionResult> GetContractorById([FromRoute] int contractorId)
+        {
+            var request = new GetContractorRequest()
+            {
+                Id = contractorId
+            };
+            var response = await this.mediator.Send(request);
+            return Ok(response);
+
+        }
 
     }
 }

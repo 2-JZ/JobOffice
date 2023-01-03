@@ -1,0 +1,24 @@
+﻿using JobOffice.DataAcces.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace JobOffice.DataAcces.CQRS.Commands
+{
+    public class DeleteProjectCommand : CommandBase<Project, Project>
+    {
+        public int Id { get; set; }
+        public override async Task<Project> Execute(JobOfficeContext context)
+        {
+            var project = await context.Projects.Where(p => p.Id == Id).FirstOrDefaultAsync();
+            context.Projects.Remove(project);
+            await context.SaveChangesAsync();
+            return this.Parameter;
+
+
+        }
+    }
+}

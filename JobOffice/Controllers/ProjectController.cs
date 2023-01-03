@@ -27,6 +27,18 @@ namespace JobOffice.Controllers
             return this.Ok(response);
         }
 
+        [HttpDelete]
+        [Route("{projectId}")]
+        public async Task<IActionResult> DeleteProject([FromRoute] int projectId)
+        {
+            var request = new DeleteProjectRequest()
+            {
+                Id = projectId
+            };
+            var response = await this.mediator.Send(request);
+            return this.Ok(response);
+        }
+
 
 
 

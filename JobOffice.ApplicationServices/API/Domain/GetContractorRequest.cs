@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JobOffice.ApplicationServices.API.Domain.Models
+namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class Project
+    public class GetContractorRequest : IRequest<GetContractorResponse>
     {
-        public string ProjectName { get; set; }
         public int Id { get; set; }
     }
 }
