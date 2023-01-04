@@ -57,6 +57,13 @@ namespace JobOffice.Controllers
             var response = await this.mediator.Send(request);
             return this.Ok(response);
         }
+        [HttpPut]
+        [Route("{projectId}")]
+        public async Task<IActionResult> PutProject([FromBody] PutProjectRequest request)
+        {
+            var response = await this.mediator.Send(request);
+            return Ok(response);
+        }
 
 
 

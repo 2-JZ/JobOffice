@@ -23,7 +23,10 @@ namespace JobOffice.ApplicationServices.Mappings
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
                 .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
                 .ForMember(x => x.ContactId, y => y.MapFrom(z => z.ContactId));
-
+            
+            this.CreateMap<PutContractorRequest, JobOffice.DataAcces.Entities.Contractor>()
+                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+                .ForMember(x => x.ContactId, y => y.MapFrom(z => z.ContactId));
 
         }
     }
