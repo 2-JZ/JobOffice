@@ -6,13 +6,10 @@ namespace JobOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ContactsController : ControllerBase
+    public class ContactsController : ApiControllerBase
     {
-        IMediator mediator;
-        public ContactsController(IMediator mediator)
+        public ContactsController(IMediator mediator):base(mediator)
         {
-            this.mediator = mediator;
-
         }
 
         [HttpPost]
@@ -35,14 +32,16 @@ namespace JobOffice.Controllers
         }
         [HttpGet]
         [Route("{contactId}")]
-        public async Task<IActionResult> GetContactById([FromRoute] int contactId)
+        public Task<IActionResult> GetContactById([FromRoute] int contactId)
         {
             var request = new GetContactByIdRequest()
             {
                 Id = contactId
             };
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<GetContactByIdRequest, GetContactByIdResponse>(request);
+
+            //var response = await this.mediator.Send(request);
+            //return this.Ok(response);
 
         }
         [HttpGet]

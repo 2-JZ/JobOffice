@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Queries;
@@ -15,7 +16,6 @@ namespace JobOffice.ApplicationServices.API.Handlers
         {
             this.mapper = mapper;
             this.queryExecutor = queryExecutor;
-
         }
         public async Task<GetContactByIdResponse> Handle(GetContactByIdRequest request, CancellationToken cancellationToken)
         {
@@ -24,10 +24,18 @@ namespace JobOffice.ApplicationServices.API.Handlers
                 Id = request.Id
             };
             var contactFromDb = await this.queryExecutor.Execute(query);
+            if (contactFromDb == null)
+            {
+                return new GetContactByIdResponse()
+                {
+                    Error = new ErrorModel(ErrorType.NotFound)
+                };
+            }
+            var mappedContact = this.mapper.Map<Contact>(contactFromDb);
 
             return new GetContactByIdResponse()
             {
-                Data = this.mapper.Map<Contact>(contactFromDb)
+                Data = mappedContact
             };
         }
     }
