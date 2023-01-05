@@ -24,7 +24,7 @@ namespace JobOffice.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest("BAD REQUEST");
+                return this.BadRequest("BAD REQUEST POPELNIASZ BLAD");
             }
             var response = await this.mediator.Send(request);
             return this.Ok(response);
