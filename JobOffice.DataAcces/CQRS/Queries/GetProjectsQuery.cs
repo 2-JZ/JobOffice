@@ -12,7 +12,11 @@ namespace JobOffice.DataAcces.CQRS.Queries
     {
         public override async Task<List<Project>> Execute(JobOfficeContext context)
         {
-            var projects = await context.Projects.ToListAsync();
+            var projects = await context.Projects
+                .Include(x=>x.Contractors)
+                .Include(x=>x.Employees)
+                .Where(x => x.ProjectName == "Vien")
+                .ToListAsync();
             return projects;
         }
     }

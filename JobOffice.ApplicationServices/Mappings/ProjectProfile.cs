@@ -21,9 +21,14 @@ namespace JobOffice.ApplicationServices.Mappings
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Id));
 
             this.CreateMap<JobOffice.DataAcces.Entities.Project, Project>()
-                .ForMember(x => x.ProjectName, y => y.MapFrom(z => z.ProjectName));
+                .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
+                .ForMember(x => x.ProjectName, y => y.MapFrom(z => z.ProjectName))
+                .ForMember(x => x.ContractorNames, y => y.MapFrom(z => z.Contractors != null ? z.Contractors.Select(x=>x.Name) : new List<string>()) )
+                .ForMember(x => x.EmployeeNames, y => y.MapFrom(z => z.Employees != null ? z.Employees.Select(x=>x.Name) : new List<string>()) );
+
 
             this.CreateMap<PutProjectRequest, JobOffice.DataAcces.Entities.Project>()
+                .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
                 .ForMember(x => x.ProjectName, y => y.MapFrom(z => z.ProjectName));
 
 

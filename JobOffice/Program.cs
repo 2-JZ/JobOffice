@@ -9,8 +9,17 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using NLog;
+using NLog.Web;
+using JobOffice.ApplicationServices.Components.NBPWeb;
 
+var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+builder.Host.UseNLog();
+
+
 string connectionString = builder.Configuration.GetConnectionString("JobOfficeConnection");
 builder.Services.AddDbContext<JobOfficeContext>(options =>
 {
@@ -32,6 +41,7 @@ builder.Services.AddMediatR(typeof(GetEmployeesHandler));         //Unncomment, 
 builder.Services.AddAutoMapper(typeof(EmployeesProfile).Assembly);
 builder.Services.AddTransient<IQueryExecutor, QueryExecutor>();
 builder.Services.AddTransient<ICommandExecutor, CommandExecutor>();
+builder.Services.AddTransient<ICurrencyNbpConnector, CurrencyNbpConnector>();
 //builder.Services.Configure<JsonOptions>(options =>
 //{
 //    options.SerializerOptions.PropertyNameCaseInsensitive = true;
@@ -44,6 +54,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
 });
+
 
 
 var app = builder.Build();

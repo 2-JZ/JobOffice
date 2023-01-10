@@ -1,5 +1,5 @@
 ﻿using JobOffice.ApplicationServices.API.Domain;
-using MediatR;
+using MediatR; 
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobOffice.Controllers
@@ -8,8 +8,9 @@ namespace JobOffice.Controllers
     [Route("[controller]")]
     public class ContactsController : ApiControllerBase
     {
-        public ContactsController(IMediator mediator):base(mediator)
+        public ContactsController(IMediator mediator, ILogger<ContactsController> logger):base(mediator)
         {
+            logger.LogTrace("We are in Contacts.");
         }
 
         [HttpPost]
