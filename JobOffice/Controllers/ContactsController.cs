@@ -1,9 +1,11 @@
 ﻿using JobOffice.ApplicationServices.API.Domain;
-using MediatR; 
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobOffice.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ContactsController : ApiControllerBase
