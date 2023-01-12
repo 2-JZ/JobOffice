@@ -16,22 +16,19 @@ namespace JobOffice.ApplicationServices.Mappings
             this.CreateMap<DeleteEmployeeRequest, JobOffice.DataAcces.Entities.Employee>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.EmployeeId));
 
-            this.CreateMap<UpdateEmployeeByIdRequest, JobOffice.DataAcces.Entities.Employee>()
-                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
-                .ForMember(x => x.Id, y => y.MapFrom(z => z.employeeId))
-                .ForMember(x => x.Surname, y => y.MapFrom(z => z.Surname))
-                .ForMember(x => x.ContactId, y => y.MapFrom(z => z.ContactId));
+            this.CreateMap<UpdateEmployeeByIdRequest, JobOffice.DataAcces.Entities.Employee>();
+            //.ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+            //.ForMember(x => x.Id, y => y.MapFrom(z => z.employeeId))
+            //.ForMember(x => x.Surname, y => y.MapFrom(z => z.Surname));
 
-            this.CreateMap<AddEmployeeRequest, JobOffice.DataAcces.Entities.Employee>()
-                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
-                .ForMember(x => x.Surname, y => y.MapFrom(z => z.Surname));
- //               .ForMember(x => x.ContactId, y => y.MapFrom(z=> z.ContactId));
+            this.CreateMap<AddEmployeeRequest, JobOffice.DataAcces.Entities.Employee>();
+            //.ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+            //.ForMember(x => x.Surname, y => y.MapFrom(z => z.Surname));
 
             this.CreateMap<JobOffice.DataAcces.Entities.Employee, Employee>()
-                .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
-                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
-                .ForMember(x => x.Surname, y => y.MapFrom(z => z.Surname));
-//                .ForMember(x => x.ContactId, y => y.MapFrom(z => z.ContactId));
+                .ForMember(x => x.Id, y => y.MapFrom(z => z.Id));
+                //.ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+                //.ForMember(x => x.Surname, y => y.MapFrom(z => z.Surname));
                 
 
                 

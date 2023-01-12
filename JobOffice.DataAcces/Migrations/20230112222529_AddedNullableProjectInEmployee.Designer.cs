@@ -4,6 +4,7 @@ using JobOffice.DataAcces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobOffice.DataAcces.Migrations
 {
     [DbContext(typeof(JobOfficeContext))]
-    partial class JobOfficeContextModelSnapshot : ModelSnapshot
+    [Migration("20230112222529_AddedNullableProjectInEmployee")]
+    partial class AddedNullableProjectInEmployee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,23 +53,21 @@ namespace JobOffice.DataAcces.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Skype")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Telephone")
-                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.Property<string>("WhatsApp")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -123,33 +124,31 @@ namespace JobOffice.DataAcces.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Adress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateOfEmployment")
+                    b.Property<DateTime>("DateOfEmployment")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
@@ -157,10 +156,11 @@ namespace JobOffice.DataAcces.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Salary")
+                    b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ZipCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -178,7 +178,7 @@ namespace JobOffice.DataAcces.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ContractorId")
+                    b.Property<int>("ContractorId")
                         .HasColumnType("int");
 
                     b.Property<int>("EmployeeId")
@@ -187,7 +187,7 @@ namespace JobOffice.DataAcces.Migrations
                     b.Property<DateTime>("InvoiceIssue")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<int>("Number")
@@ -197,6 +197,7 @@ namespace JobOffice.DataAcces.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentMethod")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -216,13 +217,7 @@ namespace JobOffice.DataAcces.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<float?>("Discount")
-                        .HasMaxLength(50)
+                    b.Property<float>("Discount")
                         .HasColumnType("real");
 
                     b.Property<int>("InvoiceId")
@@ -232,7 +227,6 @@ namespace JobOffice.DataAcces.Migrations
                         .HasColumnType("int");
 
                     b.Property<float>("Quantity")
-                        .HasMaxLength(100)
                         .HasColumnType("real");
 
                     b.Property<decimal>("TotalPrice")
@@ -258,22 +252,20 @@ namespace JobOffice.DataAcces.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<float?>("Discount")
-                        .HasMaxLength(50)
-                        .HasColumnType("real");
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("LastModified")
+                    b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("UnitPriceBrutto")
+                    b.Property<decimal>("UnitPriceBrutto")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("UnitPriceNetto")
+                    b.Property<decimal>("UnitPriceNetto")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -291,23 +283,20 @@ namespace JobOffice.DataAcces.Migrations
 
                     b.Property<string>("Adress")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProjectDescription")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ProjectEnd")
+                    b.Property<DateTime>("ProjectEnd")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ProjectName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ProjectStart")
+                    b.Property<DateTime>("ProjectStart")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -358,7 +347,9 @@ namespace JobOffice.DataAcces.Migrations
                 {
                     b.HasOne("JobOffice.DataAcces.Entities.Contractor", "Contractor")
                         .WithMany()
-                        .HasForeignKey("ContractorId");
+                        .HasForeignKey("ContractorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("JobOffice.DataAcces.Entities.Employee", "Employee")
                         .WithMany("Invoice")

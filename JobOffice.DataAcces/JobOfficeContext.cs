@@ -19,7 +19,13 @@ namespace JobOffice.DataAcces
         public DbSet<Project> Projects { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Contractor> Contractors { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<InvoiceItem> InvoiceItems { get; set; }
+        public DbSet<Product> Products { get; set; }
+        
+        
+
+        //public DbSet<User> Users { get; set; }
 
     }
 }
