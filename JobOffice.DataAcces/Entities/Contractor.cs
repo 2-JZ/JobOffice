@@ -7,11 +7,9 @@ namespace JobOffice.DataAcces.Entities
         [Required]
         [MaxLength(50)]
         [MinLength(3)]
-
         public string Name { get; set; }
         [MaxLength(10)]
         [MinLength(1)]
-
         public string Code { get; set; }
         [Required]
         [MaxLength(20)]
@@ -23,14 +21,5 @@ namespace JobOffice.DataAcces.Entities
         public string? country { get; set; }
         public List<Project>? Projects { get; set; }
         public List<Contact>? Contacts { get; set; }
-
-
-
-
-
-
-
-
-
     }
 }

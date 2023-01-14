@@ -19,8 +19,6 @@ namespace JobOffice.ApplicationServices.Mappings
             this.CreateMap<AddProductRequest, JobOffice.DataAcces.Entities.Product>();
 
             this.CreateMap<PutProductRequest, JobOffice.DataAcces.Entities.Product>();
-
-
         }
     }
 }

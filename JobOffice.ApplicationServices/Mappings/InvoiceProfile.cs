@@ -19,6 +19,7 @@ namespace JobOffice.ApplicationServices.Mappings
                .ForMember(x => x.IsActive, y => y.MapFrom(z => z.IsActive));
 
             this.CreateMap<AddInvoiceRequest, JobOffice.DataAcces.Entities.Invoice>();
+            
             this.CreateMap<PutInvoiceRequest, JobOffice.DataAcces.Entities.Invoice>();
         }
     }

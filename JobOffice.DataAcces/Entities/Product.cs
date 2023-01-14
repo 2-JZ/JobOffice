@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace JobOffice.DataAcces.Entities
 {
@@ -19,6 +14,5 @@ namespace JobOffice.DataAcces.Entities
         [MinLength(1)]
         public float? Discount { get; set; }
         public DateTime? LastModified { get; set; }
-
     }
 }

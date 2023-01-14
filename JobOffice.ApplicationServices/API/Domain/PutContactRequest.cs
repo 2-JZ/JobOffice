@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
@@ -11,5 +6,8 @@ namespace JobOffice.ApplicationServices.API.Domain
     {
         public int Id { get; set; }
         public int Telephone { get; set; }
+        public string Email { get; set; }
+        public string? Skype { get; set; }
+        public string? WhatsApp { get; set; }
     }
 }

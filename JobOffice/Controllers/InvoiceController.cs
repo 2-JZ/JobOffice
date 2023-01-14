@@ -15,49 +15,47 @@ namespace JobOffice.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetInvoices([FromQuery] GetInvoicesRequest request )
+        public Task<IActionResult> GetInvoices([FromQuery] GetInvoicesRequest request)
         {
             request = new GetInvoicesRequest();
-            return await this.HandleRequest<GetInvoicesRequest, GetInvoicesResponse>(request);
-
+            return this.HandleRequest<GetInvoicesRequest, GetInvoicesResponse>(request);
         }
 
         [HttpGet]
         [Route("{invoiceId}")]
-        public async Task<IActionResult> GetInvoices([FromRoute] int invoiceId)
+        public Task<IActionResult> GetInvoices([FromRoute] int invoiceId)
         {
             var request = new GetInvoiceRequest()
             {
                 Id = invoiceId
             };
-            return await this.HandleRequest<GetInvoiceRequest, GetInvoiceResponse>(request);
+            return this.HandleRequest<GetInvoiceRequest, GetInvoiceResponse>(request);
 
         }
 
         [HttpDelete]
         [Route("{invoiceId}")]
-        public async Task<IActionResult> DeleteInvoice([FromRoute] int invoiceId)
+        public Task<IActionResult> DeleteInvoice([FromRoute] int invoiceId)
         {
             var request = new DeleteInvoiceRequest()
             {
                 Id = invoiceId
             };
-            return await this.HandleRequest<DeleteInvoiceRequest, DeleteInvoiceResponse>(request);
+            return this.HandleRequest<DeleteInvoiceRequest, DeleteInvoiceResponse>(request);
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> PostInvoice([FromBody] AddInvoiceRequest request)
+        public Task<IActionResult> PostInvoice([FromBody] AddInvoiceRequest request)
         {
-            return await this.HandleRequest<AddInvoiceRequest, AddInvoiceResponse>(request);
+            return this.HandleRequest<AddInvoiceRequest, AddInvoiceResponse>(request);
         }
 
         [HttpPut]
         [Route("invoiceId")]
-        public async Task<IActionResult> PutInvoice([FromBody] PutInvoiceRequest request)
+        public Task<IActionResult> PutInvoice([FromBody] PutInvoiceRequest request)
         {
-            return await this.HandleRequest<PutInvoiceRequest, PutInvoiceResponse>(request);
-
+            return this.HandleRequest<PutInvoiceRequest, PutInvoiceResponse>(request);
         }
     }
 }

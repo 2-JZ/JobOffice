@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace JobOffice.DataAcces.Entities
 {
@@ -14,7 +8,6 @@ namespace JobOffice.DataAcces.Entities
         [MaxLength(50)]
         [MinLength(3)]
         public string? FirstName { get; set; }
-
         [Required]
         [MaxLength(50)]
         [MinLength(3)]
@@ -32,17 +25,10 @@ namespace JobOffice.DataAcces.Entities
         [MinLength(3)]
         public string Password { get; set; }
         public Role Role { get; set; }
-
         public string? ZipCode {get;set;}
         public string? City {get;set;}
         public string? Adress {get;set;}
         public Project Project { get; set; }
         public int? ProjectId { get; set; }
-
-
-        //public Project Project { get; set; }
-        //public List<Contact> Contacts { get; set; }
-        
-
     }
 }

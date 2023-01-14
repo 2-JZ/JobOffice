@@ -1,19 +1,13 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
 using JobOffice.ApplicationServices.API.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.Mappings
 {
     public class InvoiceItemProfile: Profile
     {
         public InvoiceItemProfile()
-        {
-            
+        {            
                 this.CreateMap<JobOffice.DataAcces.Entities.InvoiceItem, InvoiceItem>()
                    .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
                    .ForMember(x => x.InvoiceId, y => y.MapFrom(z => z.InvoiceId))
@@ -25,10 +19,8 @@ namespace JobOffice.ApplicationServices.Mappings
                    .ForMember(x => x.Description, y => y.MapFrom(z => z.Description));
 
                 this.CreateMap<AddInvoiceItemRequest, JobOffice.DataAcces.Entities.InvoiceItem>();
+                
                 this.CreateMap<PutInvoiceItemRequest, JobOffice.DataAcces.Entities.InvoiceItem>();
-
-
-
         }
     }
 }

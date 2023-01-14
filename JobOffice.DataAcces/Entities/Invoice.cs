@@ -15,7 +15,5 @@ namespace JobOffice.DataAcces.Entities
         public DateTime PaymentDeadline { get; set; }
         public string? PaymentMethod { get; set; }
         public bool? IsActive { get; set; }
-
-
     }
 }

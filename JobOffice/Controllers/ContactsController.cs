@@ -10,28 +10,28 @@ namespace JobOffice.Controllers
     [Route("[controller]")]
     public class ContactsController : ApiControllerBase
     {
-        public ContactsController(IMediator mediator, ILogger<ContactsController> logger):base(mediator)
+        public ContactsController(IMediator mediator, ILogger<ContactsController> logger) : base(mediator)
         {
             logger.LogTrace("We are in Contacts.");
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddContact([FromBody] AddContactRequest request)
+        public Task<IActionResult> AddContact([FromBody] AddContactRequest request)
         {
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<AddContactRequest, AddContactResponse>(request);
         }
+
         [HttpDelete]
         [Route("{contactId}")]
-        public async Task<IActionResult> DeleteContact([FromRoute] int contactId)
+        public Task<IActionResult> DeleteContact([FromRoute] int contactId)
         {
             var request = new DeleteContactRequest()
             {
                 Id = contactId
             };
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<DeleteContactRequest, DeleteContactResponse>(request);
+
         }
         [HttpGet]
         [Route("{contactId}")]
@@ -42,28 +42,20 @@ namespace JobOffice.Controllers
                 Id = contactId
             };
             return this.HandleRequest<GetContactByIdRequest, GetContactByIdResponse>(request);
-
-            //var response = await this.mediator.Send(request);
-            //return this.Ok(response);
-
         }
+
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetContacts([FromQuery] GetContactsRequest request)
+        public Task<IActionResult> GetContacts([FromQuery] GetContactsRequest request)
         {
-            request = new GetContactsRequest();
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
-
+            return this.HandleRequest<GetContactsRequest, GetContactsResponse>(request);
         }
+        
         [HttpPut]
         [Route("{contactId}")]
-        public async Task<IActionResult> PutContact([FromBody] PutContactRequest request)
+        public Task<IActionResult> PutContact([FromBody] PutContactRequest request)
         {
-            //request = new PutContactRequest();
-            
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<PutContactRequest, PutContactResponse>(request);
         }
 
     }

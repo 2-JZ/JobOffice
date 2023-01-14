@@ -6,7 +6,7 @@ namespace JobOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class InvoiceItemsController:ApiControllerBase
+    public class InvoiceItemsController : ApiControllerBase
     {
         public InvoiceItemsController(IMediator mediator) : base(mediator)
         {
@@ -14,47 +14,46 @@ namespace JobOffice.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetInvoiceItems([FromQuery] GetInvoiceItemsRequest request)
+        public Task<IActionResult> GetInvoiceItems([FromQuery] GetInvoiceItemsRequest request)
         {
             request = new GetInvoiceItemsRequest();
-            return await this.HandleRequest<GetInvoiceItemsRequest, GetInvoiceItemsResponse>(request);
-
+            return this.HandleRequest<GetInvoiceItemsRequest, GetInvoiceItemsResponse>(request);
         }
 
         [HttpGet]
         [Route("invoiceItemId")]
-        public async Task<IActionResult> GetInvoiceItem([FromQuery] int invoiceItemId)
+        public Task<IActionResult> GetInvoiceItem([FromQuery] int invoiceItemId)
         {
             var request = new GetInvoiceItemRequest()
             {
                 Id = invoiceItemId
             };
-            return await this.HandleRequest<GetInvoiceItemRequest, GetInvoiceItemResponse>(request);
+            return this.HandleRequest<GetInvoiceItemRequest, GetInvoiceItemResponse>(request);
         }
 
         [HttpDelete]
         [Route("{invoiceItemId}")]
-        public async Task<IActionResult> DeleteInvoiceItem([FromRoute] int invoiceItemId)
+        public Task<IActionResult> DeleteInvoiceItem([FromRoute] int invoiceItemId)
         {
             var request = new DeleteInvoiceItemRequest()
             {
                 Id = invoiceItemId
             };
-            return await this.HandleRequest<DeleteInvoiceItemRequest, DeleteInvoiceItemResponse>(request);
+            return this.HandleRequest<DeleteInvoiceItemRequest, DeleteInvoiceItemResponse>(request);
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> PostInvoiceItem([FromBody] AddInvoiceItemRequest request)
+        public Task<IActionResult> PostInvoiceItem([FromBody] AddInvoiceItemRequest request)
         {
-            return await this.HandleRequest<AddInvoiceItemRequest, AddInvoiceItemResponse>(request);
+            return this.HandleRequest<AddInvoiceItemRequest, AddInvoiceItemResponse>(request);
         }
 
         [HttpPut]
         [Route("")]
-        public async Task<IActionResult> PutInvoiceItem([FromBody] PutInvoiceItemRequest request)
+        public Task<IActionResult> PutInvoiceItem([FromBody] PutInvoiceItemRequest request)
         {
-            return await this.HandleRequest<PutInvoiceItemRequest, PutInvoiceItemResponse>(request);
+            return this.HandleRequest<PutInvoiceItemRequest, PutInvoiceItemResponse>(request);
         }
     }
 }
