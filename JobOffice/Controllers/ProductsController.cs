@@ -49,7 +49,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpPut]
-        [Route("{productId}")]
+        [Route("")]
         public Task<IActionResult> PutProduct([FromBody] PutProductRequest request)
         {
             return this.HandleRequest<PutProductRequest, PutProductResponse>(request);

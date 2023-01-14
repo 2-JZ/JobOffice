@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Commands;
 using JobOffice.DataAcces.CQRS.Queries;
@@ -28,7 +29,10 @@ namespace JobOffice.ApplicationServices.API.Handlers
             var productFromQuery = await this.queryExecutor.Execute(query);
             if (productFromQuery == null)
             {
-                return null;
+                return new PutProductResponse()
+                {
+                    Error = new ErrorModel(ErrorType.NotFound)
+                };
             }
             else
             {

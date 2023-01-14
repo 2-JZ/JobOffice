@@ -50,7 +50,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpPut]
-        [Route("{projectId}")]
+        [Route("")]
         public Task<IActionResult> PutProject([FromBody] PutProjectRequest request)
         {
             return this.HandleRequest<PutProjectRequest, PutProjectResponse>(request);

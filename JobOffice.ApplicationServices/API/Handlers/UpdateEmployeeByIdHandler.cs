@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
-using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Commands;
 using JobOffice.DataAcces.CQRS.Queries;
@@ -47,8 +46,6 @@ namespace JobOffice.ApplicationServices.API.Handlers
                 };
                 return response;
             }
-
-            
         }
     }
 }

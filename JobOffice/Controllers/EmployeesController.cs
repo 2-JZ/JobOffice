@@ -43,7 +43,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpPut]
-        [Route("{employeeId}")]
+        [Route("")]
         public Task<IActionResult> Put([FromBody] UpdateEmployeeByIdRequest request)
         {
             return this.HandleRequest<UpdateEmployeeByIdRequest, UpdateEmployeeByIdResponse>(request);

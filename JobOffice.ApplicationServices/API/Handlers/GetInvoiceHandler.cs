@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Queries;
@@ -23,6 +24,13 @@ namespace JobOffice.ApplicationServices.API.Handlers
                 Id = request.Id
             };
             var invoiceFromDb = await this.queryExecutor.Execute(query);
+            if (invoiceFromDb == null)
+            {
+                return new GetInvoiceResponse()
+                {
+                    Error = new ErrorModel(ErrorType.NotFound)
+                };
+            }
             return new GetInvoiceResponse
             {
                 Data = this.mapper.Map<Invoice>(invoiceFromDb)
