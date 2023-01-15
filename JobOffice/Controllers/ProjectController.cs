@@ -9,7 +9,7 @@ namespace JobOffice.Controllers
     public class ProjectController : ApiControllerBase
     {
         private readonly IMediator mediator;
-        public ProjectController(IMediator mediator) : base(mediator)
+        public ProjectController(IMediator mediator, ILogger<ProjectController> logger) : base(mediator)
         {
         }
 

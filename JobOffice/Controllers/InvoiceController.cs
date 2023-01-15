@@ -9,7 +9,7 @@ namespace JobOffice.Controllers
     [Route("[controller]")]
     public class InvoiceController : ApiControllerBase
     {
-        public InvoiceController(IMediator mediator) : base(mediator)
+        public InvoiceController(IMediator mediator, ILogger<InvoiceController> logger) : base(mediator)
         {
         }
 

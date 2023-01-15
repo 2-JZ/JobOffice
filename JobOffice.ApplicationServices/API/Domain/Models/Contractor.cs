@@ -9,6 +9,7 @@
         public bool IsActive { get; set; }
         public string? country { get; set; }
         public List<Project>? Projects { get; set; }
-        public List<Contact>? Contacts { get; set; }
+        public List<string> ContactsWhatsAPP { get; set; }
+        public List<string> ProjectCoutries { get;set; }
     }
 }

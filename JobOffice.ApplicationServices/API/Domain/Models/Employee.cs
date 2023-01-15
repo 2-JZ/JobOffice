@@ -8,8 +8,6 @@
         public decimal? Salary { get; set; }
         public DateTime? DateOfEmployment { get; set; }
         public List<Invoice>? Invoice { get; set; } = new List<Invoice>();
-        public string Login { get; set; }
-        public string Password { get; set; }
         public string? ZipCode { get; set; }
         public string? City { get; set; }
         public string? Adress { get; set; }

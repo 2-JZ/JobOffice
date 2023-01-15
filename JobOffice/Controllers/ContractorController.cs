@@ -1,6 +1,4 @@
 ﻿using JobOffice.ApplicationServices.API.Domain;
-using JobOffice.DataAcces;
-using JobOffice.DataAcces.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +9,7 @@ namespace JobOffice.Controllers
     public class ContractorController : ApiControllerBase
     {
 
-        public ContractorController(IMediator mediator) : base(mediator)
+        public ContractorController(IMediator mediator, ILogger<ContractorController> logger) : base(mediator)
         {
         }
 

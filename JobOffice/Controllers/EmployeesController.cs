@@ -1,15 +1,17 @@
 ﻿using JobOffice.ApplicationServices.API.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobOffice.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class EmployeesController : ApiControllerBase
     {
         private readonly IMediator mediator;
-        public EmployeesController(IMediator mediator) : base(mediator)
+        public EmployeesController(IMediator mediator, ILogger<EmployeesController> logger) : base(mediator)
         {
         }
 
@@ -48,9 +50,9 @@ namespace JobOffice.Controllers
         {
             return this.HandleRequest<UpdateEmployeeByIdRequest, UpdateEmployeeByIdResponse>(request);
         }
-
+        [AllowAnonymous]
         [HttpPost]
-        [Route("")]
+        [Route("authenticate")]
         public Task<IActionResult> AddEmployee([FromBody] AddEmployeeRequest request)
         {
             return this.HandleRequest<AddEmployeeRequest, AddEmployeeResponse>(request);

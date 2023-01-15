@@ -30,5 +30,6 @@ namespace JobOffice.DataAcces.Entities
         public string? Adress {get;set;}
         public Project Project { get; set; }
         public int? ProjectId { get; set; }
+        //public string Salt { get; set; }
     }
 }
