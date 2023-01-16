@@ -14,9 +14,9 @@ namespace JobOffice.Controllers
         public EmployeesController(IMediator mediator, ILogger<EmployeesController> logger) : base(mediator)
         {
         }
-
+        //[AllowAnonymous]
         [HttpGet]
-        [Route("")]
+        [Route("Authorization")]
         public Task<IActionResult> GetAllEmployees([FromQuery] GetEmployeesRequest request)
         {
             return this.HandleRequest<GetEmployeesRequest, GetEmployeesResponse>(request);
@@ -50,9 +50,10 @@ namespace JobOffice.Controllers
         {
             return this.HandleRequest<UpdateEmployeeByIdRequest, UpdateEmployeeByIdResponse>(request);
         }
+
         [AllowAnonymous]
         [HttpPost]
-        [Route("authenticate")]
+        [Route("AddEmpl")]
         public Task<IActionResult> AddEmployee([FromBody] AddEmployeeRequest request)
         {
             return this.HandleRequest<AddEmployeeRequest, AddEmployeeResponse>(request);

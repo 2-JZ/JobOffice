@@ -59,13 +59,18 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         //options.RoutePrefix = string.Empty;
+        //app.UseMiddleware<BasicAuthenticationHandler>(); //Last thing that i'd added
+
 
     });
 }
+//app.UseMiddleware<BasicAuthenticationHandler>(); //Last thing that i'd added
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 

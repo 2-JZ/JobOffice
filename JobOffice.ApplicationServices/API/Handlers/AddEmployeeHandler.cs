@@ -43,6 +43,7 @@ namespace JobOffice.ApplicationServices.API.Handlers
 
                 var employee = this.mapper.Map<DataAcces.Entities.Employee>(request);
                 var hashedPassword = hashingPassword.Hash(employee.Password);
+                var hashedLogin = hashingPassword.Hash(employee.Login);
                 employee.Login = hashedPassword[0];
                 employee.Password = hashedPassword[1];
                 var command = new AddEmployeeCommand() { Parameter = employee };

@@ -48,17 +48,17 @@
                 return AuthenticateResult.Fail("Missing Authorization Header");
             }
 
-            Employee user = null;
+            User user = null;
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
                 var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
-                var username = credentials[0];
+                var userName = credentials[0];
                 var password = credentials[1];
-                var query = new GetEmployeeByLoginQuery()
+                var query = new GetUserByUsernameQuery()
                 {
-                    Login = username
+                    Username = userName
                 };
                 user = await this.queryExecutor.Execute(query);
 
@@ -66,7 +66,7 @@
                 {
                     return AuthenticateResult.Fail("Invalid Authorization Header");
                 }
-                var hashedPassword = hashingPassword.HashToCheck(password, username);
+                var hashedPassword = hashingPassword.HashToCheck(password, userName);
             }
             catch
             {
@@ -75,7 +75,7 @@
 
             var claims = new[] {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Login),
+                new Claim(ClaimTypes.Name, user.UserName),
             };
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
