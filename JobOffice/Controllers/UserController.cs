@@ -2,21 +2,22 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace JobOffice.Controllers
 {
     [Authorize]
-    [ApiController]
-    [Route("[controller]")]
+    [ApiController] 
+    [Route("api/[controller]")]
     public class UserController : ApiControllerBase
     {
-        public UserController(IMediator mediator, ILogger<UserController> logger) : base(mediator)
+        public UserController(IMediator mediator ) : base(mediator)
         {
-            logger.LogTrace("We are in UserCtroler.");
+        
         }
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
-        [Route("GetUsers")]
+        [Route("Authorization")]
         public Task<IActionResult> GetUsers([FromQuery] GetUsersRequest request)
         {
             return this.HandleRequest<GetUsersRequest, GetUsersResponse>(request);
@@ -24,10 +25,10 @@ namespace JobOffice.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("")]
-        public Task<IActionResult> AddUsers([FromBody] AddUserRequest request)
+        [Route("PostingUser")]
+        public async Task<IActionResult> AddUsers([FromBody] AddUserRequest request)
         {
-            return this.HandleRequest<AddUserRequest, AddUserResponse>(request);
+            return await this.HandleRequest<AddUserRequest, AddUserResponse>(request);
         }
 
         //[HttpDelete]
@@ -52,7 +53,7 @@ namespace JobOffice.Controllers
         //    return this.HandleRequest<GetContactByIdRequest, GetContactByIdResponse>(request);
         //}
 
-        
+
 
         //[HttpPut]
         //[Route("{contactId}")]

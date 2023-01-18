@@ -8,7 +8,7 @@ namespace JobOffice.DataAcces.CQRS.Queries
         public string Username { get; set; }
         public override async Task<User> Execute(JobOfficeContext context)
         {
-            var Username = await context.Users.FirstOrDefaultAsync(x => x.UserName == this.Username);
+            var Username = await context.Users.FirstOrDefaultAsync(x => x.Username == this.Username);
             return Username;
         }
     }

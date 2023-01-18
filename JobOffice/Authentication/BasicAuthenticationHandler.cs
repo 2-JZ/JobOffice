@@ -12,6 +12,7 @@
     using JobOffice.DataAcces.Entities;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Cryptography.KeyDerivation;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -26,8 +27,8 @@
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
-            IQueryExecutor queryExecutor,
-            IHashingPassword hashingPassword)
+            IQueryExecutor queryExecutor
+            )
             : base(options, logger, encoder, clock)
         {
             this.queryExecutor = queryExecutor;
@@ -36,6 +37,7 @@
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
+
             // skip authentication if endpoint has [AllowAnonymous] attribute
             var endpoint = Context.GetEndpoint();
             if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
@@ -54,19 +56,31 @@
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
                 var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
-                var userName = credentials[0];
+                var username = credentials[0];
                 var password = credentials[1];
                 var query = new GetUserByUsernameQuery()
                 {
-                    Username = userName
+                    Username = username
                 };
                 user = await this.queryExecutor.Execute(query);
 
-                if (user == null || user.Password != password)
+                if (user == null)
                 {
-                    return AuthenticateResult.Fail("Invalid Authorization Header");
+                    return AuthenticateResult.Fail("User not exist");
                 }
-                var hashedPassword = hashingPassword.HashToCheck(password, userName);
+                byte[] salt = Convert.FromBase64String(user.Salt);
+
+                string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password: password,
+                    salt: salt,
+                    prf: KeyDerivationPrf.HMACSHA1,
+                    iterationCount: 10000,
+                    numBytesRequested: 256 / 8));
+
+                if (user.Password != hashedPassword)
+                {
+                    return AuthenticateResult.Fail("Wrong Password");
+                }
             }
             catch
             {
@@ -74,8 +88,8 @@
             }
 
             var claims = new[] {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Name, user.FirstName),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
             };
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
