@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Queries;
@@ -18,13 +19,22 @@ namespace JobOffice.ApplicationServices.API.Handlers
         }
         public async Task<GetUsersResponse> Handle(GetUsersRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetUsersQuery();
-            var usersFromDb = await this.queryExecutor.Execute(query);
-            return new GetUsersResponse()
+            if (request.AuthenticationRole.ToString() == "Developer")
             {
-                Data = this.mapper.Map<List<User>>(usersFromDb)
-            };
-
+                return new GetUsersResponse()
+                {
+                    Error = new ErrorModel(ErrorType.Unauthorized)
+                };
+            }
+            else
+            {
+                var query = new GetUsersQuery();
+                var usersFromDb = await this.queryExecutor.Execute(query);
+                return new GetUsersResponse()
+                {
+                    Data = this.mapper.Map<List<User>>(usersFromDb)
+                };
+            }
         }
     }
 }

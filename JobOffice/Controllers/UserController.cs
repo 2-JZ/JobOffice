@@ -20,7 +20,7 @@ namespace JobOffice.Controllers
         [Route("Authorization")]
         public Task<IActionResult> GetUsers([FromQuery] GetUsersRequest request)
         {
-            return this.HandleRequest<GetUsersRequest, GetUsersResponse>(request);
+            return HandleRequest<GetUsersRequest, GetUsersResponse>(request);
         }
 
         [AllowAnonymous]

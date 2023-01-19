@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JobOffice.DataAcces.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace JobOffice.ApplicationServices.API.Domain.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public Role Role { get; set; }
     }
 }

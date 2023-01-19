@@ -3,6 +3,7 @@ using MediatR;
 using JobOffice.ApplicationServices.API.Domain;
 using System.Net;
 using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
+using System.Security.Claims;
 
 namespace JobOffice.Controllers
 {
@@ -25,6 +26,12 @@ namespace JobOffice.Controllers
                     this.ModelState
                     .Where(x=>x.Value.Errors.Any())
                     .Select(x=>new {property = x.Key, errors = x.Value.Errors}));
+            }
+
+            if (User.Claims.FirstOrDefault() != null)
+            {
+                (request as RequestBase).AuthenticationName = this.User.FindFirstValue(ClaimTypes.Name);
+                (request as RequestBase).AuthenticationRole = this.User.FindFirstValue(ClaimTypes.Role);
             }
 
             var response = await this.mediator.Send(request);
