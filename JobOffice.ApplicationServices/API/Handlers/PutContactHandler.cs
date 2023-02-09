@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Commands;
 using JobOffice.DataAcces.CQRS.Queries;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Handlers
 {
@@ -32,7 +28,13 @@ namespace JobOffice.ApplicationServices.API.Handlers
                 Id = request.Id
             };
             var queryContact = await this.queryExecutor.Execute(query);
-
+            if(queryContact == null)
+            {
+                return new PutContactResponse()
+                {
+                    Error = new ErrorModel(ErrorType.NotFound)
+                };
+            }
             var mappedContactFromRequest = this.mapper.Map<JobOffice.DataAcces.Entities.Contact>(request); // Shouldn't be there query in quotes?
             var command = new PutContactCommand() { Parameter = mappedContactFromRequest };
             var contactDb = await this.commandExecutor.Execute(command);
@@ -40,7 +42,6 @@ namespace JobOffice.ApplicationServices.API.Handlers
             {
                 Data = this.mapper.Map<Contact>(contactDb)
             };
-
         }
     }
 }

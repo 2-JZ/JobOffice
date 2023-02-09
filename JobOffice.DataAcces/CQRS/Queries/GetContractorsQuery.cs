@@ -1,10 +1,5 @@
 ﻿using JobOffice.DataAcces.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JobOffice.DataAcces.CQRS.Queries
 {
@@ -12,9 +7,10 @@ namespace JobOffice.DataAcces.CQRS.Queries
     {
         public override async Task<List<Contractor>> Execute(JobOfficeContext context)
         {
-            var contractors = await context.Contractors.ToListAsync();
+            var contractors = await context.Contractors
+                .Include(x=>x.Contacts)
+                .ToListAsync();
             return contractors;
-            throw new NotImplementedException();
         }
     }
 }

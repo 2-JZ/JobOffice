@@ -6,84 +6,54 @@ namespace JobOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProjectController : ControllerBase
+    public class ProjectController : ApiControllerBase
     {
         private readonly IMediator mediator;
-        public ProjectController(IMediator mediator)
+        public ProjectController(IMediator mediator, ILogger<ProjectController> logger) : base(mediator)
         {
-            this.mediator = mediator;
-
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddProject([FromBody] AddProjectRequest request)
+        public Task<IActionResult> AddProject([FromBody] AddProjectRequest request)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest("BAD REQUEST");
-            }
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<AddProjectRequest, AddProjectResponse>(request);
         }
 
         [HttpDelete]
         [Route("{projectId}")]
-        public async Task<IActionResult> DeleteProject([FromRoute] int projectId)
+        public Task<IActionResult> DeleteProject([FromRoute] int projectId)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest("BAD REQUEST U MAKING BIG MISTAKE");
-            }
             var request = new DeleteProjectRequest()
             {
                 Id = projectId
             };
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<DeleteProjectRequest, DeleteProjectResponse>(request);
         }
+
         [HttpGet]
         [Route("{projectId}")]
-        public async Task<IActionResult> GetProject([FromRoute] int projectId)
+        public Task<IActionResult> GetProject([FromRoute] int projectId)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest("BAD REQUEST U MAKING BIG MISTAKE");
-            }
             var request = new GetProjectRequest()
             {
                 Id = projectId
             };
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<GetProjectRequest, GetProjectResponse>(request);
+
         }
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetProjects([FromQuery] GetProjectsRequest request)
+        public Task<IActionResult> GetProjects([FromQuery] GetProjectsRequest request)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest("BAD REQUEST U MAKING BIG MISTAKE");
-            }
-            request = new GetProjectsRequest();
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<GetProjectsRequest, GetProjectsResponse>(request);
         }
+
         [HttpPut]
-        [Route("{projectId}")]
-        public async Task<IActionResult> PutProject([FromBody] PutProjectRequest request)
+        [Route("")]
+        public Task<IActionResult> PutProject([FromBody] PutProjectRequest request)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest("BAD REQUEST U MAKING BIG MISTAKE");
-            }
-            var response = await this.mediator.Send(request);
-            return Ok(response);
+            return this.HandleRequest<PutProjectRequest, PutProjectResponse>(request);
         }
-
-
-
-
-
     }
 }

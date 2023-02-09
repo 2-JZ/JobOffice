@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Commands;
 using JobOffice.DataAcces.CQRS.Queries;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Handlers
 {
@@ -31,6 +27,13 @@ namespace JobOffice.ApplicationServices.API.Handlers
                 Id=request.Id
             };
             var contractorFromQuery = await this.queryExecutor.Execute(query);
+            if(contractorFromQuery==null)
+            {
+                return new PutContractorResponse()
+                {
+                    Error = new ErrorModel(ErrorType.NotFound)
+                };
+            }
             var mappedContractorFromRequest = this.mapper.Map<JobOffice.DataAcces.Entities.Contractor>(request);
             var command = new PutContractorCommand() { Parameter = mappedContractorFromRequest };
             var contractorCommand = await this.commandExecutor.Execute(command);

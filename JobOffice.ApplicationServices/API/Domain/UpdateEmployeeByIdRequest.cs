@@ -10,9 +10,15 @@ namespace JobOffice.ApplicationServices.API.Domain
     public class UpdateEmployeeByIdRequest: IRequest<UpdateEmployeeByIdResponse>
     {
         public int employeeId { get; set; }
-        public string Surname { get; set; }
-        public string Name { get; set; }
-        public int ContactId { get; set; }
+        public string? FirstName { get; set; }
+        public string LastName { get; set; }
+        public decimal? Salary { get; set; }
+//        public string Login { get; set; }
+//        public string Password { get; set; }
+        public string? ZipCode { get; set; }
+        public string? City { get; set; }
+        public string? Adress { get; set; }
+        //public int? ProjectId { get; set; }
 
 
     }

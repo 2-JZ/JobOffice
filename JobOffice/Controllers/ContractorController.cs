@@ -1,6 +1,4 @@
 ﻿using JobOffice.ApplicationServices.API.Domain;
-using JobOffice.DataAcces;
-using JobOffice.DataAcces.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +9,7 @@ namespace JobOffice.Controllers
     public class ContractorController : ApiControllerBase
     {
 
-        public ContractorController(IMediator mediator):base(mediator)
+        public ContractorController(IMediator mediator, ILogger<ContractorController> logger) : base(mediator)
         {
         }
 
@@ -19,70 +17,43 @@ namespace JobOffice.Controllers
         [Route("")]
         public Task<IActionResult> AddContractor([FromBody] AddContractorRequest request)
         {
-            return this.HandleRequest<AddContractorRequest,AddContractorResponse>(request);
-            //if (!this.ModelState.IsValid)
-            //{
-            //    return this.BadRequest("BAD REQUEST U MAKING MISTAKE");
-            //}
-            //var response = await this.mediator.Send(request);
-            //return this.Ok(response);
+            return this.HandleRequest<AddContractorRequest, AddContractorResponse>(request);
         }
 
         [HttpDelete]
         [Route("{contractorId}")]
-        public async Task<IActionResult> DeleteContractor([FromRoute] int contractorId)
+        public Task<IActionResult> DeleteContractor([FromRoute] int contractorId)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest("BAD REQUEST U MAKING MISTAKE");
-            }
             var request = new DeleteContractorRequest()
             {
                 Id = contractorId
             };
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<DeleteContractorRequest, DeleteContractorResponse>(request);
         }
 
         [HttpGet]
         [Route("{contractorId}")]
-        public async Task<IActionResult> GetContractorById([FromRoute] int contractorId)
+        public Task<IActionResult> GetContractorById([FromRoute] int contractorId)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest("BAD REQUEST U MAKING BIG MISTAKE");
-            }
             var request = new GetContractorRequest()
             {
                 Id = contractorId
             };
-            var response = await this.mediator.Send(request);
-            return Ok(response);
+            return this.HandleRequest<GetContractorRequest, GetContractorResponse>(request);
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetContractors([FromQuery] GetContractorsRequest request)
+        public Task<IActionResult> GetContractors([FromQuery] GetContractorsRequest request)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest("BAD REQUEST U MAKING BIG MISTAKE");
-            }
-            request = new GetContractorsRequest();
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
+            return this.HandleRequest<GetContractorsRequest, GetContractorsResponse>(request);
         }
+        
         [HttpPut]
         [Route("{contractorId}")]
-        public async Task<IActionResult> PutContractor([FromBody] PutContractorRequest request)
+        public Task<IActionResult> PutContractor([FromBody] PutContractorRequest request)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest("BAD REQUEST U MAKING BIG MISTAKE");
-            }
-            var response = await this.mediator.Send(request);
-            return this.Ok(response);
-
+            return this.HandleRequest<PutContractorRequest, PutContractorResponse>(request);
         }
 
     }

@@ -19,11 +19,11 @@ namespace JobOffice.ApplicationServices.API.Handlers
         }
         public async Task<GetContactByIdResponse> Handle(GetContactByIdRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetContactByIdQuery()
+            var contact = new GetContactByIdQuery()
             {
                 Id = request.Id
             };
-            var contactFromDb = await this.queryExecutor.Execute(query);
+            var contactFromDb = await this.queryExecutor.Execute(contact);
             if (contactFromDb == null)
             {
                 return new GetContactByIdResponse()
@@ -32,7 +32,6 @@ namespace JobOffice.ApplicationServices.API.Handlers
                 };
             }
             var mappedContact = this.mapper.Map<Contact>(contactFromDb);
-
             return new GetContactByIdResponse()
             {
                 Data = mappedContact

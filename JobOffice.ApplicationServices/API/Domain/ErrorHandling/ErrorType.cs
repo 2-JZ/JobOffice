@@ -18,6 +18,8 @@ namespace JobOffice.ApplicationServices.API.Domain.ErrorHandling
         public const string RequestTooLarge = "REQUEST_TOO_LARGE";
         public const string TooManyRequests = "TOO_MANY_REQUESTS";
         public const string MethodNotAllowed = "METHOD_NOT_ALLOWED";
+        public const string UserExist = "User_Exist";
+
 
 
     }
