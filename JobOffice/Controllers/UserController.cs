@@ -25,10 +25,10 @@ namespace JobOffice.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("PostingUser")]
-        public async Task<IActionResult> AddUsers([FromBody] AddUserRequest request)
+        [Route("authenticate")]
+        public Task<IActionResult> Post([FromBody] ValidateUserRequest request)
         {
-            return await this.HandleRequest<AddUserRequest, AddUserResponse>(request);
+            return this.HandleRequest<ValidateUserRequest, ValidateUserResponse>(request);
         }
 
         //[HttpDelete]
