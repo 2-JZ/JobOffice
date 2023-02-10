@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JobOffice.DataAcces.CQRS.Commands
 {
-    internal class PutUserCommand
+    public class PutUserCommand
     {
     }
 }
