@@ -30,37 +30,5 @@ namespace JobOffice.Controllers
         {
             return this.HandleRequest<ValidateUserRequest, ValidateUserResponse>(request);
         }
-
-        //[HttpDelete]
-        //[Route("{contactId}")]
-        //public Task<IActionResult> DeleteContact([FromRoute] int contactId)
-        //{
-        //    var request = new DeleteContactRequest()
-        //    {
-        //        Id = contactId
-        //    };
-        //    return this.HandleRequest<DeleteContactRequest, DeleteContactResponse>(request);
-        //}
-
-        //[HttpGet]
-        //[Route("{contactId}")]
-        //public Task<IActionResult> GetContactById([FromRoute] int contactId)
-        //{
-        //    var request = new GetContactByIdRequest()
-        //    {
-        //        Id = contactId
-        //    };
-        //    return this.HandleRequest<GetContactByIdRequest, GetContactByIdResponse>(request);
-        //}
-
-
-
-        //[HttpPut]
-        //[Route("{contactId}")]
-        //public Task<IActionResult> PutContact([FromBody] PutContactRequest request)
-        //{
-        //    return this.HandleRequest<PutContactRequest, PutContactResponse>(request);
-        //}
-
     }
 }
