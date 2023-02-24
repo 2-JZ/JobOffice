@@ -17,7 +17,7 @@ namespace JobOffice.Controllers
         }
         //[AllowAnonymous]
         [HttpGet]
-        [Route("authorization")]
+        [Route("users")]
         public Task<IActionResult> GetUsers([FromQuery] GetUsersRequest request)
         {
             return HandleRequest<GetUsersRequest, GetUsersResponse>(request);
