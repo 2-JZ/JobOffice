@@ -8,7 +8,7 @@ namespace JobOffice.Controllers
 {
     [Authorize]
     [ApiController] 
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController : ApiControllerBase
     {
         public UserController(IMediator mediator ) : base(mediator)

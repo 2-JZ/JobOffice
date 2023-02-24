@@ -65,14 +65,15 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 builder.Services.AddAuthentication("BasicAuthentication").
                 AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+builder.Services.AddRazorPages();
 
-//builder.Services.Configure<ApiBehaviorOptions>(options =>
-//{
-//    options.SuppressModelStateInvalidFilter = true;
-//});
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 //builder.Services.AddAuthentication("BasicAuthentication").
 //                AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-//builder.Services.AddMvc();
+builder.Services.AddMvc();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -90,16 +91,24 @@ if (app.Environment.IsDevelopment())
 }
 //app.UseMiddleware<BasicAuthenticationHandler>(); //Last thing that i'd added
 
-app.UseHttpsRedirection();
 
-//app.UseCors(x => x
-//        .AllowAnyOrigin()
-//        .AllowAnyMethod()
-//        .AllowAnyHeader());
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors(x => x
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 app.UseAuthentication();
+
 
 app.UseAuthorization();
 
+app.MapRazorPages();
+
 app.MapControllers();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 app.Run();
