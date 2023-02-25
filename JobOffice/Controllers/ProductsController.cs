@@ -42,7 +42,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("addProduct")]
         public Task<IActionResult> PostProduct([FromBody] AddProductRequest request)
         {
             return this.HandleRequest<AddProductRequest, AddProductResponse>(request);

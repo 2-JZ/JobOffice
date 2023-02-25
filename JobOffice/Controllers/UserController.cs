@@ -8,7 +8,7 @@ namespace JobOffice.Controllers
 {
     [Authorize]
     [ApiController] 
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController : ApiControllerBase
     {
         public UserController(IMediator mediator ) : base(mediator)
@@ -17,7 +17,7 @@ namespace JobOffice.Controllers
         }
         //[AllowAnonymous]
         [HttpGet]
-        [Route("authorization")]
+        [Route("users")]
         public Task<IActionResult> GetUsers([FromQuery] GetUsersRequest request)
         {
             return HandleRequest<GetUsersRequest, GetUsersResponse>(request);
