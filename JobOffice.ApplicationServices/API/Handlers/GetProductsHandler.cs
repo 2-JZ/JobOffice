@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Queries;
@@ -25,12 +26,22 @@ namespace JobOffice.ApplicationServices.API.Handlers
 
         public async Task<GetProductsResponse> Handle(GetProductsRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetProductsQuery();
-            var productsFromDb = await this.queryExecutor.Execute(query);
-            return new GetProductsResponse()
+            if (request.AuthenticationRole.ToString() == "Developer")
             {
-                Data = this.mapper.Map<List<Product>>(productsFromDb)
-            };
+                return new GetProductsResponse()
+                {
+                    Error = new ErrorModel(ErrorType.Unauthorized)
+                };
+            }
+            else
+            {
+                var query = new GetProductsQuery();
+                var productsFromDb = await this.queryExecutor.Execute(query);
+                return new GetProductsResponse()
+                {
+                    Data = this.mapper.Map<List<Product>>(productsFromDb)
+                };
+            }
         }
     }
 }
