@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class PutProductRequest: IRequest<PutProductResponse>
+    public class PutProductRequest: RequestBase, IRequest<PutProductResponse>
     {
         public int Id { get; set; }
         public string ProductName { get; set; }

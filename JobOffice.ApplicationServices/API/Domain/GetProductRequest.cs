@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class GetProductRequest : IRequest<GetProductResponse>
+    public class GetProductRequest :RequestBase, IRequest<GetProductResponse>
     {
         public int Id { get; set; }
     }

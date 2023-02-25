@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class DeleteProductRequest:IRequest<DeleteProductResponse>
+    public class DeleteProductRequest:RequestBase, IRequest<DeleteProductResponse>
     {
         public int Id { get; set; }
     }

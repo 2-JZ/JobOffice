@@ -22,28 +22,41 @@ namespace JobOffice.ApplicationServices.API.Handlers
         }
         public async Task<PutProductResponse> Handle(PutProductRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetProductQuery()
-            {
-                Id = request.Id
-            };
-            var productFromQuery = await this.queryExecutor.Execute(query);
-            if (productFromQuery == null)
+            if(request.AuthenticationRole.ToString() == "Developer")
             {
                 return new PutProductResponse()
                 {
-                    Error = new ErrorModel(ErrorType.NotFound)
+                    Error = new ErrorModel(ErrorType.Unauthorized)
                 };
             }
             else
             {
-                var mappedProductFromRequest = this.mapper.Map<Product>(request);
-                var command = new PutProductCommand() { Parameter = mappedProductFromRequest };
-                var productDb = await this.commandExecutor.Execute(command);
-                return new PutProductResponse()
+                var query = new GetProductQuery()
                 {
-                    Data = this.mapper.Map<Domain.Models.Product>(productDb)
+                    Id = request.Id
                 };
-            }
+                var productFromQuery = await this.queryExecutor.Execute(query);
+                if (productFromQuery == null)
+                {
+                    return new PutProductResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.NotFound)
+                    };
+                }
+                else
+                {
+                    var mappedProductFromRequest = this.mapper.Map<Product>(request);
+                    var command = new PutProductCommand()
+                    {
+                        Parameter = mappedProductFromRequest 
+                    };
+                    var productDb = await this.commandExecutor.Execute(command);
+                    return new PutProductResponse()
+                    {
+                        Data = this.mapper.Map<Domain.Models.Product>(productDb)
+                    };
+                }
+            }       
         }
     }
 }
