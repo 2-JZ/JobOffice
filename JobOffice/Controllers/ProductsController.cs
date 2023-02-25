@@ -32,7 +32,7 @@ namespace JobOffice.Controllers
 
         [HttpDelete]
         [Route("{productId}")]
-        public Task<IActionResult> DeleteInvoice([FromRoute] int productId)
+        public Task<IActionResult> DeleteProduct([FromRoute] int productId)
         {
             var request = new DeleteProductRequest()
             {
@@ -49,7 +49,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpPut]
-        [Route("")]
+        [Route("{productId}")]
         public Task<IActionResult> PutProduct([FromBody] PutProductRequest request)
         {
             return this.HandleRequest<PutProductRequest, PutProductResponse>(request);

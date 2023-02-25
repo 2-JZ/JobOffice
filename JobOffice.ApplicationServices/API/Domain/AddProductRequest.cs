@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class AddProductRequest: IRequest<AddProductResponse>
+    public class AddProductRequest: RequestBase, IRequest<AddProductResponse>
     {
         public string ProductName { get; set; }
         public decimal? UnitPriceNetto { get; set; }
