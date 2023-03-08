@@ -14,7 +14,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("addcontractor")]
         public Task<IActionResult> AddContractor([FromBody] AddContractorRequest request)
         {
             return this.HandleRequest<AddContractorRequest, AddContractorResponse>(request);
@@ -32,7 +32,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpGet]
-        [Route("{contractorId}")]
+        [Route("{contractor}")]
         public Task<IActionResult> GetContractorById([FromRoute] int contractorId)
         {
             var request = new GetContractorRequest()
@@ -41,7 +41,7 @@ namespace JobOffice.Controllers
             };
             return this.HandleRequest<GetContractorRequest, GetContractorResponse>(request);
         }
-
+        
         [HttpGet]
         [Route("")]
         public Task<IActionResult> GetContractors([FromQuery] GetContractorsRequest request)
