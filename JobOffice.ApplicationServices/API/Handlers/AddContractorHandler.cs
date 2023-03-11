@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Commands;
 using JobOffice.DataAcces.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain.Handlers
 {
@@ -19,18 +15,26 @@ namespace JobOffice.ApplicationServices.API.Domain.Handlers
         {
             this.commandExecutor = commandExecutor;
             this.mapper = mapper;
-
         }
-
         public async Task<AddContractorResponse> Handle(AddContractorRequest request, CancellationToken cancellationToken)
         {
-            var contractor = this.mapper.Map<Contractor>(request);
-            var command = new AddContractorCommand() { Parameter = contractor };
-            var contractorFromDb =  await this.commandExecutor.Execute(command);
-            return new AddContractorResponse()
+            if (request.AuthenticationRole.ToString() == "Developer")
             {
-                Data = this.mapper.Map<JobOffice.ApplicationServices.API.Domain.Models.Contractor>(contractorFromDb),
-            };
+                return new AddContractorResponse()
+                {
+                    Error = new ErrorModel(ErrorType.Unauthorized)
+                };
+            }
+            else
+            {
+                var contractor = this.mapper.Map<Contractor>(request);
+                var command = new AddContractorCommand() { Parameter = contractor };
+                var contractorFromDb = await this.commandExecutor.Execute(command);
+                return new AddContractorResponse()
+                {
+                    Data = this.mapper.Map<JobOffice.ApplicationServices.API.Domain.Models.Contractor>(contractorFromDb),
+                };
+            }      
         }
     }
 }

@@ -6,15 +6,15 @@ namespace JobOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ContractorController : ApiControllerBase
+    public class ContractorsController : ApiControllerBase
     {
 
-        public ContractorController(IMediator mediator, ILogger<ContractorController> logger) : base(mediator)
+        public ContractorsController(IMediator mediator, ILogger<ContractorsController> logger) : base(mediator)
         {
         }
 
         [HttpPost]
-        [Route("addcontractor")]
+        [Route("addContractor")]
         public Task<IActionResult> AddContractor([FromBody] AddContractorRequest request)
         {
             return this.HandleRequest<AddContractorRequest, AddContractorResponse>(request);
@@ -32,7 +32,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpGet]
-        [Route("{contractor}")]
+        [Route("{contractorId}")]
         public Task<IActionResult> GetContractorById([FromRoute] int contractorId)
         {
             var request = new GetContractorRequest()
