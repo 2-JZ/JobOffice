@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class AddContactRequest: IRequest<AddContactResponse>
+    public class AddContactRequest : RequestBase, IRequest<AddContactResponse>
     {
         public int Telephone { get; set; }
         public string Email { get; set; }

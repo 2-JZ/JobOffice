@@ -23,25 +23,38 @@ namespace JobOffice.ApplicationServices.API.Handlers
         }
         public async Task<PutContactResponse> Handle(PutContactRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetContactByIdQuery()
-            {
-                Id = request.Id
-            };
-            var queryContact = await this.queryExecutor.Execute(query);
-            if(queryContact == null)
+            if (request.AuthenticationRole.ToString() == "Developer")
             {
                 return new PutContactResponse()
                 {
-                    Error = new ErrorModel(ErrorType.NotFound)
+                    Error = new ErrorModel(ErrorType.Unauthorized)
                 };
             }
-            var mappedContactFromRequest = this.mapper.Map<JobOffice.DataAcces.Entities.Contact>(request); // Shouldn't be there query in quotes?
-            var command = new PutContactCommand() { Parameter = mappedContactFromRequest };
-            var contactDb = await this.commandExecutor.Execute(command);
-            return new PutContactResponse()
+            else
             {
-                Data = this.mapper.Map<Contact>(contactDb)
-            };
+                var query = new GetContactByIdQuery()
+                {
+                    Id = request.Id
+                };
+                var queryContact = await this.queryExecutor.Execute(query);
+                if (queryContact == null)
+                {
+                    return new PutContactResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.NotFound)
+                    };
+                }
+                else
+                {
+                    var mappedContactFromRequest = this.mapper.Map<JobOffice.DataAcces.Entities.Contact>(request); // Shouldn't be there query in quotes?
+                    var command = new PutContactCommand() { Parameter = mappedContactFromRequest };
+                    var contactDb = await this.commandExecutor.Execute(command);
+                    return new PutContactResponse()
+                    {
+                        Data = this.mapper.Map<Contact>(contactDb)
+                    };
+                }
+            }
         }
     }
 }
