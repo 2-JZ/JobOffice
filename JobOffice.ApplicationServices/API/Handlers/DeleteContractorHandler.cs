@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Commands;
+using JobOffice.DataAcces.CQRS.Queries;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Handlers
 {
@@ -16,26 +13,51 @@ namespace JobOffice.ApplicationServices.API.Handlers
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly IMapper mapper;
-        public DeleteContractorHandler(ICommandExecutor commandExecutor, IMapper mapper)
+        private readonly IQueryExecutor queryExecutor;
+        public DeleteContractorHandler(ICommandExecutor commandExecutor, IMapper mapper, IQueryExecutor queryExecutor)
         {
-            this.mapper=mapper;
+            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
+            this.queryExecutor = queryExecutor;
         }
         public async Task<DeleteContractorResponse> Handle(DeleteContractorRequest request, CancellationToken cancellationToken)
         {
-            var command = new DeleteContractorCommand()
+            if (request.AuthenticationRole == "Developer")
             {
-                Id = request.Id
-            };
-            var contractorFromDb = await this.commandExecutor.Execute(command);
-            
-            return new DeleteContractorResponse()
+                return new DeleteContractorResponse()
+                {
+                    Error = new ErrorModel(ErrorType.Unauthorized)
+                };
+            }
+            else
             {
-                Data = this.mapper.Map<Contractor>(contractorFromDb)
+                var isContractorInDb = new GetContractorQuery()
+                {
+                    Id = request.Id
+                };
+                var product = await queryExecutor.Execute(isContractorInDb);
+                if (product == null)
+                {
+                    return new DeleteContractorResponse
+                    {
+                        Error = new ErrorModel(ErrorType.NotFound)
+                    };
+                }
+                else
+                {
+                    var command = new DeleteContractorCommand()
+                    {
+                        Id = request.Id
+                    };
+                    var contractorFromDb = await this.commandExecutor.Execute(command);
 
-            };
+                    return new DeleteContractorResponse()
+                    {
+                        Data = this.mapper.Map<Contractor>(contractorFromDb)
 
-            
+                    };
+                }
+            }
         }
     }
 }

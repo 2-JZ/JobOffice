@@ -22,26 +22,38 @@ namespace JobOffice.ApplicationServices.API.Handlers
         }
         public async Task<PutContractorResponse> Handle(PutContractorRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetContractorQuery()
-            {
-                Id=request.Id
-            };
-            var contractorFromQuery = await this.queryExecutor.Execute(query);
-            if(contractorFromQuery==null)
+            if (request.AuthenticationRole.ToString() == "Developer")
             {
                 return new PutContractorResponse()
                 {
-                    Error = new ErrorModel(ErrorType.NotFound)
+                    Error = new ErrorModel(ErrorType.Unauthorized)
                 };
             }
-            var mappedContractorFromRequest = this.mapper.Map<JobOffice.DataAcces.Entities.Contractor>(request);
-            var command = new PutContractorCommand() { Parameter = mappedContractorFromRequest };
-            var contractorCommand = await this.commandExecutor.Execute(command);
-            return new PutContractorResponse()
+            else
             {
-                Data = this.mapper.Map<Contractor>(contractorCommand)
-            };
-
+                var query = new GetContractorQuery()
+                {
+                    Id = request.Id
+                };
+                var contractorFromQuery = await this.queryExecutor.Execute(query);
+                if (contractorFromQuery == null)
+                {
+                    return new PutContractorResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.NotFound)
+                    };
+                }
+                else
+                {
+                    var mappedContractorFromRequest = this.mapper.Map<JobOffice.DataAcces.Entities.Contractor>(request);
+                    var command = new PutContractorCommand() { Parameter = mappedContractorFromRequest };
+                    var contractorCommand = await this.commandExecutor.Execute(command);
+                    return new PutContractorResponse()
+                    {
+                        Data = this.mapper.Map<Contractor>(contractorCommand)
+                    };
+                }
+            }
         }
     }
 }

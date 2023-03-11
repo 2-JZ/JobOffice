@@ -1,13 +1,8 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class DeleteContractorRequest : IRequest<DeleteContractorResponse>
+    public class DeleteContractorRequest :RequestBase, IRequest<DeleteContractorResponse>
     {
         public int Id { get; set; }
     }
