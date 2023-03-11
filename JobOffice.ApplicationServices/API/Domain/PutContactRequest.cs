@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class PutContactRequest : IRequest<PutContactResponse>
+    public class PutContactRequest : RequestBase, IRequest<PutContactResponse>
     {
         public int Id { get; set; }
         public int Telephone { get; set; }

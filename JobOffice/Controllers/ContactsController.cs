@@ -16,7 +16,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("addContact")]
         public Task<IActionResult> AddContact([FromBody] AddContactRequest request)
         {
             return this.HandleRequest<AddContactRequest, AddContactResponse>(request);

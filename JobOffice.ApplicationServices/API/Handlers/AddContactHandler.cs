@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.DataAcces.CQRS;
 using JobOffice.DataAcces.CQRS.Commands;
 using JobOffice.DataAcces.Entities;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace JobOffice.ApplicationServices.API.Handlers
 {
-    public class AddContactHandler: IRequestHandler<AddContactRequest, AddContactResponse>
+    public class AddContactHandler : IRequestHandler<AddContactRequest, AddContactResponse>
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly IMapper mapper;
@@ -20,15 +21,26 @@ namespace JobOffice.ApplicationServices.API.Handlers
         }
         public async Task<AddContactResponse> Handle(AddContactRequest request, CancellationToken cancellationToken)
         {
-
-            var contact = this.mapper.Map<Contact>(request);
-            var command = new AddContactCommand() { Parameter = contact };
-            var contactFromDb = await this.commandExecutor.Execute(command);
-            
-            return new AddContactResponse()
+            if (request.AuthenticationRole.ToString() == "Developer")
             {
-                Data = this.mapper.Map<JobOffice.ApplicationServices.API.Domain.Models.Contact>(contactFromDb)
-            };
+                return new AddContactResponse()
+                {
+                    Error = new ErrorModel(ErrorType.Unauthorized)
+                };
+            }
+            else
+            {
+                var contact = this.mapper.Map<Contact>(request);
+                var command = new AddContactCommand() { Parameter = contact };
+                var contactFromDb = await this.commandExecutor.Execute(command);
+
+                return new AddContactResponse()
+                {
+                    Data = this.mapper.Map<JobOffice.ApplicationServices.API.Domain.Models.Contact>(contactFromDb)
+                };
+            }
+
+
         }
     }
 }
