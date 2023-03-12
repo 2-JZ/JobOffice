@@ -46,7 +46,7 @@ namespace JobOffice.ApplicationServices.API.Handlers
                 }
                 else
                 {
-                    var mappedContactFromRequest = this.mapper.Map<JobOffice.DataAcces.Entities.Contact>(request); // Shouldn't be there query in quotes?
+                    var mappedContactFromRequest = this.mapper.Map<JobOffice.DataAcces.Entities.Contact>(request);
                     var command = new PutContactCommand() { Parameter = mappedContactFromRequest };
                     var contactDb = await this.commandExecutor.Execute(command);
                     return new PutContactResponse()
