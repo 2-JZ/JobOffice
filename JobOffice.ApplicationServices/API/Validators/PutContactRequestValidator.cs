@@ -9,8 +9,8 @@ namespace JobOffice.ApplicationServices.API.Validators
         {
             this.RuleFor(x => x.Telephone).NotEmpty();
             this.RuleFor(x => x.Email).EmailAddress();
-            this.RuleFor(x => x.WhatsApp).Length(20);
-            this.RuleFor(x => x.Skype).Length(20);
+            this.RuleFor(x => x.WhatsApp).Length(1, 20);
+            this.RuleFor(x => x.Skype).Length(1, 20);
         }
     }
 }
