@@ -17,7 +17,7 @@ namespace JobOffice.ApplicationServices.Components.NBPWeb
         public async Task<Currency> Fetch(string code)
         {
             var request = new RestRequest("api/exchangerates/rates/A/EUR/", Method.Get);
-            request.AddParameter("{WHYFUCKITSWORKING}",this.table);
+            request.AddParameter("{WHYITSWORKING}",this.table);
             request.AddParameter("{WHYITSWORKING}", code);
             var queryResult = await restClient.ExecuteAsync(request);
             var currency = JsonConvert.DeserializeObject<Currency>(queryResult.Content);
