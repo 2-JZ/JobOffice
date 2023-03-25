@@ -33,11 +33,10 @@ namespace JobOffice.ApplicationServices.API.Handlers
                 var command = new AddProductCommand() { Parameter = product };
                 var productFromDb = await this.commandExecutor.Execute(command);
 
-                var tmp = new AddProductResponse()
+                return new AddProductResponse()
                 {
                     Data = this.mapper.Map<Product>(productFromDb),
                 };
-                return tmp;
             }
         }
     }
