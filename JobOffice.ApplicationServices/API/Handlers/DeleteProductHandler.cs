@@ -49,20 +49,11 @@ namespace JobOffice.ApplicationServices.API.Handlers
                         Id = request.Id,
                     };
                     var productFromDb = await this.commandExecutor.Execute(command);
-                    //var response = new DeleteProductResponse();
-                    //if(productFromDb == product)
-                    //{
-                    //    response.Data = true;
-                    //}
-                    //else
-                    //{
-                    //    response.Data = false;
-                    //}
-                    //return response;
-                    return new DeleteProductResponse()
+                    var tmp = new DeleteProductResponse()
                     {
                         Data = this.mapper.Map<Domain.Models.Product>(productFromDb)
                     };
+                    return tmp;
                 }
 
             }
