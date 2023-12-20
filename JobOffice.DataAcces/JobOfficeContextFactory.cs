@@ -13,7 +13,7 @@ namespace JobOffice.DataAcces
         public JobOfficeContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<JobOfficeContext>();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-3E9PO6T\\SQLEXPRESS01;Initial Catalog=JobOffice;Integrated Security=True;Encrypt=False;TrustServerCertificate=False");
+            optionsBuilder.UseSqlServer("Data Source=TOMEK\\SQLEXPRESS;Initial Catalog=JobOffice;Integrated Security=True;Encrypt=False;TrustServerCertificate=False");
             return new JobOfficeContext(optionsBuilder.Options);
         }
     }
