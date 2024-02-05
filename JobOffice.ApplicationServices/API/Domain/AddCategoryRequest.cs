@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    internal class AddCategoryRequest : RequestBase, IRequest<AddCategoryResponse>
+    public class AddCategoryRequest : RequestBase, IRequest<AddCategoryResponse>
     {
     }
 }

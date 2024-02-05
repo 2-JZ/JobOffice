@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JobOffice.ApplicationServices.API.Domain.Models
+namespace JobOffice.ApplicationServices.API.Handlers
 {
-    public class Category
+    internal class GetCategoriesHandler
     {
     }
 }

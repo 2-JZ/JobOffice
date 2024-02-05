@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JobOffice.ApplicationServices.API.Domain.Models;
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    internal class PutCategoryResponse
+    public class PutCategoryResponse: ResponseBase<Category>
     {
     }
 }
