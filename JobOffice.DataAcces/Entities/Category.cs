@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace JobOffice.DataAcces.Entities
 {
-    public class Category
+    public class Category : EntityBase
     {
-        public int Id { get; set; }
+        [Required]
+        [MaxLength(50)]
+        [MinLength(5)]
         public string Name { get; set; }
+        [MaxLength(50)]
+        [MinLength(5)]
         public string Description { get; set; }
         public string Picture { get; set; }
-        public string CategoryURL { get; set;}
+        public string CategoryURL { get; set; }
         public int IdSubCategory { get; set; }
-        public bool isActive { get; set;}
-        public DateTime CategoryCategoryId { get; set;} = DateTime.Now;
-        public int CategoryCategoryNameId { get;}
-
+        public bool isActive { get; set; }
+        public DateTime CreatedCategoryId { get; set; } = DateTime.Now;
+        public ICollection<SubCategory> SubCategories { get; set; }
     }
 }
