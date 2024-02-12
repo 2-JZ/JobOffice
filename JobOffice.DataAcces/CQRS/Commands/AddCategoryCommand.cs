@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JobOffice.DataAcces.Entities;
 
 namespace JobOffice.DataAcces.CQRS.Commands
 {
-    internal class AddCategoryCommand
+    public class AddCategoryCommand : CommandBase<Category, Category>
     {
+        public override async Task<Category> Execute(JobOfficeContext context)
+        {
+            await context.Categories.AddAsync(this.Parameter);
+            await context.SaveChangesAsync();
+            return this.Parameter;
+
+        }
     }
 }
