@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JobOffice.DataAcces.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobOffice.DataAcces.CQRS.Queries
 {
-    internal class GetCategoriesQuery
+    public class GetCategoriesQuery : QueryBase<List<Category>>
     {
+        public async override Task<List<Category>> Execute(JobOfficeContext context)
+        {
+            var category = await context.Categories.ToListAsync();
+            return category;
+        }
     }
 }

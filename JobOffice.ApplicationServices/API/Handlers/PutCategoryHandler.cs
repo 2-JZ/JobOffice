@@ -7,6 +7,7 @@ using JobOffice.DataAcces.CQRS.Commands;
 using JobOffice.DataAcces.CQRS.Queries;
 using JobOffice.DataAcces.Entities;
 using MediatR;
+using Category = JobOffice.DataAcces.Entities.Category;
 
 namespace JobOffice.ApplicationServices.API.Handlers
 {
@@ -32,7 +33,7 @@ namespace JobOffice.ApplicationServices.API.Handlers
             }
             else
             {
-                var query = new GetCategoryQuery()
+                var query = new GetCategoryByIdQuery()
                 {
                     Id = request.Id
                 };
