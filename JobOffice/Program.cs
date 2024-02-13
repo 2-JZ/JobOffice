@@ -28,8 +28,8 @@ builder.Host.UseNLog();
 string connectionString = builder.Configuration.GetConnectionString("JobOfficeConnection");
 builder.Services.AddDbContext<JobOfficeContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("JobOfficeConnection"));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("JobOfficeConnection"),
+        b => b.MigrationsAssembly("JobOffice.DataAcces"));  // Dodaj opcjê MigrationsAssembly
 });
 // Add services to the container.
 
