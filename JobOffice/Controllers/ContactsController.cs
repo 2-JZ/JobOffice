@@ -52,7 +52,7 @@ namespace JobOffice.Controllers
         }
         
         [HttpPut]
-        [Route("{contactId}")]
+        [Route("contactId")]
         public Task<IActionResult> PutContact([FromBody] PutContactRequest request)
         {
             return this.HandleRequest<PutContactRequest, PutContactResponse>(request);

@@ -6,6 +6,7 @@
         Developer,
         DelegeteEmployee,
         OfficeEmployee,
-        CEO
+        CEO,
+        Admin
     }
 }
