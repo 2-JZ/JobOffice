@@ -48,7 +48,7 @@ namespace JobOffice.DataAcces.Migrations
                     b.Property<string>("CategoryURL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedCategoryId")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -294,6 +294,9 @@ namespace JobOffice.DataAcces.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<float?>("Discount")
                         .HasMaxLength(50)
                         .HasColumnType("real");
@@ -313,6 +316,8 @@ namespace JobOffice.DataAcces.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -497,6 +502,17 @@ namespace JobOffice.DataAcces.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("JobOffice.DataAcces.Entities.Product", b =>
+                {
+                    b.HasOne("JobOffice.DataAcces.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("JobOffice.DataAcces.Entities.SubCategory", b =>
                 {
                     b.HasOne("JobOffice.DataAcces.Entities.Category", "Category")
@@ -508,6 +524,8 @@ namespace JobOffice.DataAcces.Migrations
 
             modelBuilder.Entity("JobOffice.DataAcces.Entities.Category", b =>
                 {
+                    b.Navigation("Products");
+
                     b.Navigation("SubCategories");
                 });
 

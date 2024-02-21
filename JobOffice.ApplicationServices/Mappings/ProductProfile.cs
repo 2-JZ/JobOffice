@@ -14,7 +14,8 @@ namespace JobOffice.ApplicationServices.Mappings
                .ForMember(x => x.UnitPriceBrutto, y => y.MapFrom(z => z.UnitPriceBrutto))
                .ForMember(x => x.UnitPriceBrutto, y => y.MapFrom(z => z.UnitPriceBrutto))
                .ForMember(x => x.Discount, y => y.MapFrom(z => z.Discount))
-               .ForMember(x => x.LastModified, y => y.MapFrom(z => z.LastModified));
+               .ForMember(x => x.LastModified, y => y.MapFrom(z => z.LastModified))
+               .ForMember(x => x.CategoryId, y => y.MapFrom(z => z.CategoryId));
 
             this.CreateMap<AddProductRequest, JobOffice.DataAcces.Entities.Product>();
 

@@ -8,5 +8,6 @@
         public decimal? UnitPriceBrutto { get; set; }
         public float? Discount { get; set; }
         public DateTime? LastModified { get; set; }
+        public int CategoryId {  get; set; }
     }
 }

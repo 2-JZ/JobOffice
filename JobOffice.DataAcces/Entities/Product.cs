@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobOffice.DataAcces.Entities
 {
@@ -14,5 +15,7 @@ namespace JobOffice.DataAcces.Entities
         [MinLength(1)]
         public float? Discount { get; set; }
         public DateTime? LastModified { get; set; }
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
     }
 }
