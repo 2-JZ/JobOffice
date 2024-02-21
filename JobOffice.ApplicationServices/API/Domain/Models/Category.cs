@@ -5,6 +5,7 @@ namespace JobOffice.ApplicationServices.API.Domain.Models
 {
     public class Category
     {
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -18,7 +19,7 @@ namespace JobOffice.ApplicationServices.API.Domain.Models
 
         public bool isActive { get; set; }
 
-        public DateTime CreatedCategoryId { get; set; } = DateTime.Now;
+        public DateTime CreatedTime { get; set; } = DateTime.Now;
 
         public ICollection<SubCategory>? SubCategories { get; set; }
 

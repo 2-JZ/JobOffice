@@ -19,10 +19,13 @@ namespace JobOffice.DataAcces.Entities
 
         public int? IdSubCategory { get; set; }  
 
-        public bool isActive { get; set; }
+        public bool isActive { get; set; } //= false;
 
-        public DateTime CreatedCategoryId { get; set; } = DateTime.Now;
+        public DateTime? CreatedTime { get; set; } //= DateTime.Now;
 
-        public ICollection<SubCategory>? SubCategories { get; set; }  
+        public ICollection<SubCategory>? SubCategories { get; set; }
+        
+        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
     }
 }
