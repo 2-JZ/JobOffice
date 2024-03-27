@@ -14,6 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Web;
 using Microsoft.AspNetCore.Mvc;
+using JobOffice.ApplicationServices.API.Domain.Models;
+using JobOffice.ApplicationServices.Components.ContactForm;
+using Microsoft.Extensions.Configuration;
 [assembly: ApiController]
 
 
@@ -56,6 +59,11 @@ builder.Services.AddTransient<IQueryExecutor, QueryExecutor>();
 builder.Services.AddTransient<ICommandExecutor, CommandExecutor>();
 builder.Services.AddTransient<ICurrencyNbpConnector, CurrencyNbpConnector>();
 builder.Services.AddTransient<IHashingPassword, HashingPassword>();
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+
+// Rejestracja serwisu SMTP
+builder.Services.AddTransient<IEmailService, EmailService>();
+
 builder.Services.AddMvcCore()
     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddContractorRequest>());
 builder.Services.Configure<ApiBehaviorOptions>(options =>

@@ -1,4 +1,5 @@
 ﻿using JobOffice.ApplicationServices.API.Domain;
+using JobOffice.DataAcces.CQRS.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,14 @@ namespace JobOffice.Controllers
         public Task<IActionResult> PutContact([FromBody] PutContactRequest request)
         {
             return this.HandleRequest<PutContactRequest, PutContactResponse>(request);
+        }
+
+        [HttpPost]
+        [Route("ContactForm")]
+        public Task<IActionResult> AddContactForm([FromBody] ContactFormRequest request)
+        {
+            // Tutaj możesz skorzystać z MediatR do obsługi formularza kontaktowego
+            return this.HandleRequest<ContactFormRequest, ContactFormResponse>(request);
         }
 
     }

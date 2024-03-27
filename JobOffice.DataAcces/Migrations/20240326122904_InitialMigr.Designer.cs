@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobOffice.DataAcces.Migrations
 {
     [DbContext(typeof(JobOfficeContext))]
-    [Migration("20240219215303_initialmigration")]
-    partial class initialmigration
+    [Migration("20240326122904_InitialMigr")]
+    partial class InitialMigr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,31 +48,20 @@ namespace JobOffice.DataAcces.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CategoryURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("IdSubCategory")
-                        .HasColumnType("int");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Picture")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("isActive")
-                        .HasColumnType("bit");
+                    b.Property<int?>("ParentCategoryId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Categories");
                 });
@@ -325,6 +314,28 @@ namespace JobOffice.DataAcces.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("JobOffice.DataAcces.Entities.ProductAttributes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Attributes");
+                });
+
             modelBuilder.Entity("JobOffice.DataAcces.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -392,6 +403,28 @@ namespace JobOffice.DataAcces.Migrations
                     b.ToTable("SubCategories");
                 });
 
+            modelBuilder.Entity("JobOffice.DataAcces.Entities.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Tags");
+                });
+
             modelBuilder.Entity("JobOffice.DataAcces.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -443,6 +476,15 @@ namespace JobOffice.DataAcces.Migrations
                         .HasForeignKey("ProjectsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("JobOffice.DataAcces.Entities.Category", b =>
+                {
+                    b.HasOne("JobOffice.DataAcces.Entities.Category", "ParentCategory")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentCategoryId");
+
+                    b.Navigation("ParentCategory");
                 });
 
             modelBuilder.Entity("JobOffice.DataAcces.Entities.Contact", b =>
@@ -508,7 +550,7 @@ namespace JobOffice.DataAcces.Migrations
             modelBuilder.Entity("JobOffice.DataAcces.Entities.Product", b =>
                 {
                     b.HasOne("JobOffice.DataAcces.Entities.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -516,20 +558,36 @@ namespace JobOffice.DataAcces.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("JobOffice.DataAcces.Entities.ProductAttributes", b =>
+                {
+                    b.HasOne("JobOffice.DataAcces.Entities.Category", null)
+                        .WithMany("Attributes")
+                        .HasForeignKey("CategoryId");
+                });
+
             modelBuilder.Entity("JobOffice.DataAcces.Entities.SubCategory", b =>
                 {
                     b.HasOne("JobOffice.DataAcces.Entities.Category", "Category")
-                        .WithMany("SubCategories")
+                        .WithMany()
                         .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("JobOffice.DataAcces.Entities.Tag", b =>
+                {
+                    b.HasOne("JobOffice.DataAcces.Entities.Category", null)
+                        .WithMany("Tags")
+                        .HasForeignKey("CategoryId");
+                });
+
             modelBuilder.Entity("JobOffice.DataAcces.Entities.Category", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Attributes");
 
-                    b.Navigation("SubCategories");
+                    b.Navigation("Children");
+
+                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("JobOffice.DataAcces.Entities.Contractor", b =>

@@ -1,31 +1,35 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobOffice.DataAcces.Entities
 {
     public class Category : EntityBase
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
-        [MaxLength(50)]
-        [MinLength(5)]
         public string Name { get; set; }
 
-        [MaxLength(50)]
-        [MinLength(5)]
-        public string? Description { get; set; }  
+        public string Description { get; set; }
 
-        public string? Picture { get; set; }  
+        // Klucz obcy dla kategorii nadrzędnej (jeśli istnieje)
+        public int? ParentCategoryId { get; set; }
 
-        public string? CategoryURL { get; set; }  
+        [ForeignKey("ParentCategoryId")]
+        public Category ParentCategory { get; set; }
 
-        public int? IdSubCategory { get; set; }  
+        // Relacja jeden-do-wielu z podkategorią
+        public List<Category> Children { get; set; }
 
-        public bool isActive { get; set; } //= false;
+        // Lista atrybutów kategorii
+        public List<ProductAttributes> Attributes { get; set; }
 
-        public DateTime? CreatedTime { get; set; } //= DateTime.Now;
-
-        public ICollection<SubCategory>? SubCategories { get; set; }
-        
-        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+        // Lista tagów przypisanych do kategorii
+        public List<Tag> Tags { get; set; }
 
     }
+
+
+
 }
