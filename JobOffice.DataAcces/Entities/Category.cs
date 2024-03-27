@@ -8,25 +8,24 @@ namespace JobOffice.DataAcces.Entities
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Name is required")]
+        [MaxLength(100)]
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        // Klucz obcy dla kategorii nadrzędnej (jeśli istnieje)
+        //Foreign key to following higher category, if exists
         public int? ParentCategoryId { get; set; }
 
         [ForeignKey("ParentCategoryId")]
         public Category ParentCategory { get; set; }
 
-        // Relacja jeden-do-wielu z podkategorią
-        public List<Category> Children { get; set; }
-
-        // Lista atrybutów kategorii
         public List<ProductAttributes> Attributes { get; set; }
 
-        // Lista tagów przypisanych do kategorii
         public List<Tag> Tags { get; set; }
+
+        // field for ordering childrens 
+        public int Order { get; set; }
 
     }
 
