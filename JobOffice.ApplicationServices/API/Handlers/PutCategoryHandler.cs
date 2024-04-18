@@ -24,13 +24,14 @@ namespace JobOffice.ApplicationServices.API.Handlers
         }
         public async Task<PutCategoryResponse> Handle(PutCategoryRequest request, CancellationToken cancellationToken)
         {
-            if (request.AuthenticationRole.ToString() != "Admin")
+            if (request.AuthenticationRole.ToString() == "Developer")
             {
                 return new PutCategoryResponse()
                 {
                     Error = new ErrorModel(ErrorType.Unauthorized)
                 };
             }
+
             else
             {
                 var query = new GetCategoryByIdQuery()

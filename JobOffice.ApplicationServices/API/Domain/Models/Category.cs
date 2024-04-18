@@ -1,27 +1,33 @@
 ﻿using JobOffice.DataAcces.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobOffice.ApplicationServices.API.Domain.Models
 {
     public class Category
     {
+
+        [Key]
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Name is required")]
+        [MaxLength(100)]
         public string Name { get; set; }
 
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
-        public string? Picture { get; set; }
+        //Foreign key to following higher category, if exists
+        public int? ParentCategoryId { get; set; }
 
-        public string? CategoryURL { get; set; }
+        [ForeignKey("ParentCategoryId")]
+        public Category ParentCategory { get; set; }
 
-        public int? IdSubCategory { get; set; }
+        public List<ProductAttributes>? Attributes { get; set; }
 
-        public bool isActive { get; set; }
+        public List<Tag>? Tags { get; set; }
 
-        public DateTime CreatedTime { get; set; } = DateTime.Now;
-
-        public ICollection<SubCategory>? SubCategories { get; set; }
+        // field for ordering childrens 
+        public int? Order { get; set; }
 
     }
 }
