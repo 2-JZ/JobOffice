@@ -1,5 +1,6 @@
 ﻿using JobOffice.ApplicationServices.API.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobOffice.Controllers
@@ -43,8 +44,10 @@ namespace JobOffice.Controllers
             };
             return this.HandleRequest<DeleteCategoryRequest, DeleteCategoryResponse>(request);
         }
-
+        
+        //[AllowAnonymous]
         [HttpPost]
+        [Route("AddCategory")]
         [Route("")]
         public Task<IActionResult> PostCategory([FromBody] AddCategoryRequest request)
         {
@@ -52,7 +55,7 @@ namespace JobOffice.Controllers
         }
 
         [HttpPut]
-        [Route("categoryId")]
+        [Route("{categoryId}")]
         public Task<IActionResult> PutCategory([FromBody] PutCategoryRequest request)
         {
             return this.HandleRequest<PutCategoryRequest, PutCategoryResponse>(request);

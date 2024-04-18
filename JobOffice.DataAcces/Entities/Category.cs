@@ -20,12 +20,12 @@ namespace JobOffice.DataAcces.Entities
         [ForeignKey("ParentCategoryId")]
         public Category ParentCategory { get; set; }
 
-        public List<ProductAttributes> Attributes { get; set; }
+        public List<ProductAttributes>? Attributes { get; set; }
 
-        public List<Tag> Tags { get; set; }
-
+        public List<Tag>? Tags { get; set; }
+        
         // field for ordering childrens 
-        public int Order { get; set; }
+        public int? Order { get; set; }
 
     }
 
