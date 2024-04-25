@@ -1,5 +1,4 @@
-﻿using JobOffice.ApplicationServices.API.Domain.Models;
-using MediatR;
+﻿using MediatR;
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
