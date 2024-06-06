@@ -18,6 +18,6 @@ namespace JobOffice.DataAcces.Entities
         [MinLength(3)]
         public string Password { get; set; }
         public string Salt { get; set; }
-        public Role Role { get; set; }
+        public Role Role { get; set; } = Role.User;
     }
 }

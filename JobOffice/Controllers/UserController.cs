@@ -25,7 +25,7 @@ namespace JobOffice.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("")]
+        [Route("add")]
         public Task<IActionResult> AddEmployee([FromBody] AddUserRequest request)
         {
             return this.HandleRequest<AddUserRequest, AddUserResponse>(request);

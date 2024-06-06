@@ -7,6 +7,7 @@
         DelegeteEmployee,
         OfficeEmployee,
         CEO,
-        Admin
+        Admin,
+        User
     }
 }
