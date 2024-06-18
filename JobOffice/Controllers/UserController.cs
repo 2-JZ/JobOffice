@@ -38,5 +38,14 @@ namespace JobOffice.Controllers
         {
             return this.HandleRequest<ValidateUserRequest, ValidateUserResponse>(request);
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("reset-password")]
+        public Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            return this.HandleRequest<ResetPasswordRequest, ResetPasswordResponse>(request);
+        }
     }
 }
+

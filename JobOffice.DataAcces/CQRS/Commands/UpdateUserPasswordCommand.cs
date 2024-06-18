@@ -7,6 +7,7 @@ public class UpdateUserPasswordCommand : CommandBase<User, User>
 {
     public User user { get; set; }
     public int Id { get; set; }
+    public string Password { get; set; }
 
 
     public override async Task<User> Execute(JobOfficeContext context)

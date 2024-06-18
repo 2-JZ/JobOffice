@@ -1,6 +1,8 @@
-﻿namespace JobOffice.ApplicationServices.API.Domain
+﻿using JobOffice.ApplicationServices.API.Domain.Models;
+
+namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class ResetPasswordResponse
+    public class ResetPasswordResponse : ResponseBase<User>
     {
         public bool Success { get; set; }
         public string ErrorMessage { get; set; }
