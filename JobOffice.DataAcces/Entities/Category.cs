@@ -14,7 +14,7 @@ namespace JobOffice.DataAcces.Entities
 
         public string Description { get; set; }
 
-        //Foreign key to following higher category, if exists
+        // Foreign key to following higher category, if exists
         public int? ParentCategoryId { get; set; }
 
         [ForeignKey("ParentCategoryId")]
@@ -23,12 +23,11 @@ namespace JobOffice.DataAcces.Entities
         public List<ProductAttributes>? Attributes { get; set; }
 
         public List<Tag>? Tags { get; set; }
-        
-        // field for ordering childrens 
+
+        // Field for ordering children
         public int? Order { get; set; }
 
+        // Path to the image file
+        public string? ImagePath { get; set; }
     }
-
-
-
 }

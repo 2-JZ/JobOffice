@@ -8,7 +8,9 @@ namespace JobOffice.ApplicationServices.Mappings
     {
         public CategoryProfile()
         {
-            this.CreateMap<AddCategoryRequest, JobOffice.DataAcces.Entities.Category>();
+            this.CreateMap<AddCategoryRequest, JobOffice.DataAcces.Entities.Category>()
+                        .ForMember(dest => dest.ImagePath, opt => opt.Ignore());
+
 
             this.CreateMap<PutCategoryRequest, JobOffice.DataAcces.Entities.Category>();
 
