@@ -13,45 +13,47 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Web;
-using Microsoft.AspNetCore.Mvc;
 using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.ApplicationServices.Components.ContactForm;
 using Microsoft.Extensions.Configuration;
-[assembly: ApiController]
 
+[assembly: ApiController]
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure logging
 builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
 builder.Host.UseNLog();
 
-
+// Configure database context
 string connectionString = builder.Configuration.GetConnectionString("JobOfficeConnection");
 builder.Services.AddDbContext<JobOfficeContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("JobOfficeConnection"),
-        b => b.MigrationsAssembly("JobOffice.DataAcces"));  // Dodaj opcjê MigrationsAssembly
+    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("JobOffice.DataAcces"));
 });
-// Add services to the container.
 
+// Add services to the container
 builder.Services.AddControllers();
 
+// Configure CORS
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder
+    options.AddDefaultPolicy(builder =>
+    {
+        builder
             .AllowAnyOrigin()
             .AllowAnyHeader()
             .AllowAnyMethod();
-        });
+    });
 });
 
+// Configure Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Register dependencies
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddMediatR(typeof(GetEmployeesHandler));
 builder.Services.AddAutoMapper(typeof(EmployeesProfile).Assembly);
@@ -60,63 +62,53 @@ builder.Services.AddTransient<ICommandExecutor, CommandExecutor>();
 builder.Services.AddTransient<ICurrencyNbpConnector, CurrencyNbpConnector>();
 builder.Services.AddTransient<IHashingPassword, HashingPassword>();
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
-
-// Rejestracja serwisu SMTP
 builder.Services.AddTransient<IEmailService, EmailService>();
 
+// FluentValidation setup
 builder.Services.AddMvcCore()
-    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddContractorRequest>());
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddCategoryRequest>());
+
+// Configure API behavior
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
 });
 
-builder.Services.AddAuthentication("BasicAuthentication").
-                AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+// Configure authentication
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+// Add Razor Pages (if needed, usually for Blazor)
 builder.Services.AddRazorPages();
 
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-});
-//builder.Services.AddAuthentication("BasicAuthentication").
-//                AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-builder.Services.AddMvc();
+// Build application
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-        //options.RoutePrefix = string.Empty;
-        //app.UseMiddleware<BasicAuthenticationHandler>(); //Last thing that i'd added
-
-
     });
 }
-//app.UseMiddleware<BasicAuthenticationHandler>(); //Last thing that i'd added
 
+// Enable serving static files
+app.UseStaticFiles(); // This allows serving files from wwwroot
 
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseCors(x => x
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+
+// Configure CORS
+app.UseCors();
+
 app.UseAuthentication();
-
-
 app.UseAuthorization();
 
+// Map endpoints
 app.MapRazorPages();
-
 app.MapControllers();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+// Run the application
 app.Run();

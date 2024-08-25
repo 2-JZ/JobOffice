@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
-using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.ApplicationServices.API.Domain;
-using JobOffice.DataAcces.CQRS.Commands;
-using JobOffice.DataAcces.CQRS.Queries;
+using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
 using JobOffice.DataAcces.CQRS;
-using MediatR;
+using JobOffice.DataAcces.CQRS.Commands;
 using JobOffice.DataAcces.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class AddCategoryHandler : IRequestHandler<AddCategoryRequest, AddCategoryResponse>
 {
@@ -40,16 +36,25 @@ public class AddCategoryHandler : IRequestHandler<AddCategoryRequest, AddCategor
 
         if (request.Image != null)
         {
+            // Select Folder For Images
             var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
             var uniqueFileName = $"{Guid.NewGuid()}_{request.Image.FileName}";
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
+            // Check if exist folder
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            // save photo
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await request.Image.CopyToAsync(fileStream);
             }
 
-            category.ImagePath = uniqueFileName;
+            // path for image
+            category.ImagePath = $"/images/{uniqueFileName}";
         }
 
         var command = new AddCategoryCommand() { Parameter = category };

@@ -38,4 +38,8 @@
     <ProjectReference Include="..\JobOffice.DataAcces\JobOffice.DataAcces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>
