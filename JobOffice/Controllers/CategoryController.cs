@@ -10,7 +10,7 @@ namespace JobOffice.Controllers
     [Route("[controller]")]
     public class CategoryController : ApiControllerBase
     {
-        public CategoryController(IMediator mediator, ILogger<InvoiceController> logger) : base(mediator)
+        public CategoryController(IMediator mediator, ILogger<CategoryController> logger) : base(mediator)
         {
         }
 
@@ -18,7 +18,6 @@ namespace JobOffice.Controllers
         [Route("")]
         public Task<IActionResult> GetCategories([FromQuery] GetCategoriesRequest request)
         {
-            request = new GetCategoriesRequest();
             return this.HandleRequest<GetCategoriesRequest, GetCategoriesResponse>(request);
         }
 
@@ -48,7 +47,7 @@ namespace JobOffice.Controllers
         //[AllowAnonymous]
         [HttpPost]
         [Route("AddCategory")]
-        [Route("")]
+        //[Route("")]
         public Task<IActionResult> PostCategory([FromBody] AddCategoryRequest request)
         {
             return this.HandleRequest<AddCategoryRequest, AddCategoryResponse>(request);

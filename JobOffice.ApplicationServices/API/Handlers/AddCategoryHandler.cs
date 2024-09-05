@@ -1,25 +1,22 @@
 ﻿using AutoMapper;
-using JobOffice.ApplicationServices.API.Domain;
 using JobOffice.ApplicationServices.API.Domain.ErrorHandling;
-using JobOffice.DataAcces.CQRS;
+using JobOffice.ApplicationServices.API.Domain;
 using JobOffice.DataAcces.CQRS.Commands;
-using JobOffice.DataAcces.Entities;
+using JobOffice.DataAcces.CQRS;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
+using JobOffice.DataAcces.Entities;
 
 public class AddCategoryHandler : IRequestHandler<AddCategoryRequest, AddCategoryResponse>
 {
     private readonly ICommandExecutor commandExecutor;
     private readonly IMapper mapper;
     private readonly IQueryExecutor queryExecutor;
-    private readonly IWebHostEnvironment webHostEnvironment;
 
-    public AddCategoryHandler(IMapper mapper, ICommandExecutor commandExecutor, IQueryExecutor queryExecutor, IWebHostEnvironment webHostEnvironment)
+    public AddCategoryHandler(IMapper mapper, ICommandExecutor commandExecutor, IQueryExecutor queryExecutor)
     {
         this.commandExecutor = commandExecutor;
         this.mapper = mapper;
         this.queryExecutor = queryExecutor;
-        this.webHostEnvironment = webHostEnvironment;
     }
 
     public async Task<AddCategoryResponse> Handle(AddCategoryRequest request, CancellationToken cancellationToken)
@@ -34,28 +31,15 @@ public class AddCategoryHandler : IRequestHandler<AddCategoryRequest, AddCategor
 
         var category = this.mapper.Map<Category>(request);
 
-        if (request.Image != null)
-        {
-            // Select Folder For Images
-            var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
-            var uniqueFileName = $"{Guid.NewGuid()}_{request.Image.FileName}";
-            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-            // Check if exist folder
-            if (!Directory.Exists(uploadsFolder))
-            {
-                Directory.CreateDirectory(uploadsFolder);
-            }
-
-            // save photo
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                await request.Image.CopyToAsync(fileStream);
-            }
-
-            // path for image
-            category.ImagePath = $"/images/{uniqueFileName}";
-        }
+        //if (request.ImageData != null)
+        //{
+        //    // Convert the uploaded image to byte array
+        //    using (var memoryStream = new MemoryStream())
+        //    {
+        //        await request.ImageData.CopyToAsync(memoryStream);
+        //        category.ImageData = memoryStream.ToArray();
+        //    }
+        //}
 
         var command = new AddCategoryCommand() { Parameter = category };
         var categoryFromDb = await this.commandExecutor.Execute(command);

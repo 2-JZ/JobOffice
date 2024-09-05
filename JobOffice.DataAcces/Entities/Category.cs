@@ -5,8 +5,6 @@ namespace JobOffice.DataAcces.Entities
 {
     public class Category : EntityBase
     {
-        [Key]
-        public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [MaxLength(100)]
@@ -27,7 +25,10 @@ namespace JobOffice.DataAcces.Entities
         // Field for ordering children
         public int? Order { get; set; }
 
-        // Path to the image file
+        // Path to the image file (optional, in case you still want to support file paths)
         public string? ImagePath { get; set; }
+
+        // New property to store the image data directly in the database
+        public byte[]? ImageData { get; set; }
     }
 }

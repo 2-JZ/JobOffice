@@ -31,6 +31,9 @@ namespace JobOffice.ApplicationServices.API.Domain.Models
 
         public string? ImagePath { get; set; }
 
+        public byte[]? ImageData { get; set; }  // Store image as binary data
+
+
 
     }
 }
