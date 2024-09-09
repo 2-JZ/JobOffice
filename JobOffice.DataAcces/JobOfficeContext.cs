@@ -27,5 +27,7 @@ namespace JobOffice.DataAcces
         public DbSet<SubCategory> SubCategories { get; set; }   
         public DbSet<Tag> Tags { get; set; }   
         public DbSet<ProductAttributes> Attributes { get; set; }   
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }   
+        public DbSet<CartItem> CartItems { get; set; }   
     }
 }
