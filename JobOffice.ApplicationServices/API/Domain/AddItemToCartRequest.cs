@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class AddItemToCartRequest : IRequest<AddItemToCartResponse>
+    public class AddItemToCartRequest : RequestBase, IRequest<AddItemToCartResponse>
     {
         public int CartId { get; set; }  // Added CartId property
         public int? ProductId { get; set; }

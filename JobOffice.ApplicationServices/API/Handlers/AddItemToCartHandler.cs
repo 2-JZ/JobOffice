@@ -31,7 +31,7 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartRequest, AddIte
 
         return new AddItemToCartResponse
         {
-            Data = this.mapper.Map<CartItem>(addedItem)
+            Data = this.mapper.Map<JobOffice.ApplicationServices.API.Domain.Models.CartItem>(addedItem)
         };
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/carts")]
+[Route("[controller]")]
 public class ShoppingCartController : ApiControllerBase
 {
     //private readonly IMediator _mediator;
@@ -14,14 +14,17 @@ public class ShoppingCartController : ApiControllerBase
     {
     }
 
-    //[HttpGet("{cartId}")]
-    //public async Task<IActionResult> GetCart([FromRoute] int cartId)
-    //{
-    //    var response = await _mediator.Send(new GetCartByIdRequest { CartId = cartId });
-    //    if (response == null) return NotFound();
+    [HttpPost]
+    [Route("CreateCart")]
+    public async Task<IActionResult> CreateCart([FromBody] CreateCartRequest request)
+    {
+        var createCartRequest = new CreateCartRequest
+        {
+            UserId = request.UserId // UserId is nullable (null for anonymous users)
+        };
 
-    //    return Ok(response.ShoppingCart);
-    //}
+        return await this.HandleRequest<CreateCartRequest, CreateCartResponse>(createCartRequest);
+    }
 
     [HttpGet]
     [Route("{categoryId}")]
@@ -35,27 +38,23 @@ public class ShoppingCartController : ApiControllerBase
 
     }
 
-
-    //[HttpPost("{cartId}/items")]
-    //public async Task<IActionResult> AddItemToCart([FromRoute] int cartId, [FromBody] AddItemToCartRequest request)
-    //{
-    //    request.CartId = cartId;
-    //    var response = await _mediator.Send(request);
-    //    if (!response.Success) return BadRequest();
-
-    //    return Ok();
-    //}
-
-    //[HttpDelete("{cartId}/items/{productId}")]
-    //public async Task<IActionResult> RemoveItemFromCart([FromRoute] int cartId, [FromRoute] int productId)
-    //{
-    //    var response = await _mediator.Send(new RemoveItemFromCartRequest
-    //    {
-    //        CartId = cartId,
-    //        ProductId = productId
-    //    });
-    //    if (!response.Success) return BadRequest();
-
-    //    return Ok();
-    //}
+    [HttpPost]
+    [Route("{cartId}/items")]
+    public Task<IActionResult> AddItemToCart([FromRoute]int cartId,[FromBody] AddItemToCartRequest request)
+    {
+        request.CartId = cartId;
+        return this.HandleRequest<AddItemToCartRequest, AddItemToCartResponse>(request);
+    }
+ 
+    [HttpDelete]
+    [Route("{cartId}/items/{productId}")]
+    public async Task<IActionResult> RemoveItemFromCart([FromRoute] int cartId, [FromRoute] int productId)
+    {
+        var request = new RemoveItemFromCartRequest()
+        {
+            CartId = cartId,
+            ProductId = productId
+        };
+        return await this.HandleRequest<RemoveItemFromCartRequest, RemoveItemFromCartResponse>(request);
+    }
 }

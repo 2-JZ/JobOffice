@@ -23,7 +23,7 @@ public class GetCartByIdHandler : IRequestHandler<GetCartByIdRequest, GetCartByI
 
         return new GetCartByIdResponse
         {
-            Data = this.mapper.Map<ShoppingCart>(cart)
+            Data = this.mapper.Map<JobOffice.ApplicationServices.API.Domain.Models.ShoppingCart>(cart)
         };
     }
 }

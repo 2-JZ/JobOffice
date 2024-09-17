@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class AddItemToCartResponse : ResponseBase<CartItem>
+    public class CreateCartResponse : ResponseBase<ShoppingCart>
     {
     }
 }
