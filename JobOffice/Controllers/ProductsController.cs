@@ -13,6 +13,17 @@ namespace JobOffice.Controllers
         }
 
         [HttpGet]
+        [Route("byCategory/{categoryId}")]
+        public Task<IActionResult> GetProductsByCategory([FromRoute] int categoryId)
+        {
+            var request = new GetProductsByCategoryRequest
+            {
+                CategoryId = categoryId
+            };
+            return this.HandleRequest<GetProductsByCategoryRequest, GetProductsByCategoryResponse>(request);
+        }
+
+        [HttpGet]
         [Route("")]
         public Task<IActionResult> GetProducts([FromQuery] GetProductsRequest request)
         {

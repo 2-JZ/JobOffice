@@ -59,5 +59,13 @@ namespace JobOffice.Controllers
         {
             return this.HandleRequest<PutCategoryRequest, PutCategoryResponse>(request);
         }
+
+        [HttpGet]
+        [Route("Subcategories/{parentId}")]
+        public async Task<IActionResult> GetSubcategories([FromRoute] int parentId)
+        {
+            var request = new GetSubcategoriesRequest { ParentCategoryId = parentId };
+            return await HandleRequest<GetSubcategoriesRequest, GetSubcategoriesResponse>(request);
+        }
     }
 }

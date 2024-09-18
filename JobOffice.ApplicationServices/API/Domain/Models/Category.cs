@@ -33,6 +33,8 @@ namespace JobOffice.ApplicationServices.API.Domain.Models
 
         public byte[]? ImageData { get; set; }  // Store image as binary data
 
+        public IEnumerable<Category>? Subcategories { get; set; } = new List<Category>(); // Initialize to avoid null
+
 
 
     }

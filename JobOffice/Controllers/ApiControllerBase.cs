@@ -32,6 +32,7 @@ namespace JobOffice.Controllers
             {
                 //(request as RequestBase).AuthenticationName = this.User.FindFirstValue(ClaimTypes.Name);
                 
+                
                 (request as RequestBase).AuthenticationRole = this.User.FindFirstValue(ClaimTypes.Role);
             }
 
