@@ -22,7 +22,7 @@ namespace JobOffice.ApplicationServices.API.Handlers
             var invoiceItemsFromDb = await this.queryExecutor.Execute(query);
             return new GetInvoiceItemsResponse()
             {
-                Data = this.mapper.Map<List<InvoiceItem>>(invoiceItemsFromDb)
+                Data = this.mapper.Map<List<JobOffice.ApplicationServices.API.Domain.Models.InvoiceItem>>(invoiceItemsFromDb)
             };
         }
     }

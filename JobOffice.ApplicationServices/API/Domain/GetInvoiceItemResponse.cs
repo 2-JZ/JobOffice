@@ -2,7 +2,8 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class GetInvoiceItemResponse: ResponseBase<InvoiceItem>
+    public class GetInvoiceItemResponse : ResponseBase<InvoiceItem>
     {
+
     }
 }

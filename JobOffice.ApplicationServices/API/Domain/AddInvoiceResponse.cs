@@ -4,6 +4,6 @@ namespace JobOffice.ApplicationServices.API.Domain
 {
     public class AddInvoiceResponse: ResponseBase<Invoice>
     {
-
+        
     }
 }

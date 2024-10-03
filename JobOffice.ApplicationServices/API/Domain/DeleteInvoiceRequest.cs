@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class DeleteInvoiceRequest: IRequest<DeleteInvoiceResponse>
+    public class DeleteInvoiceRequest: RequestBase, IRequest<DeleteInvoiceResponse>
     {
         public int Id { get; set; }
     }

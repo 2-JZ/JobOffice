@@ -2,7 +2,7 @@
 
 namespace JobOffice.ApplicationServices.API.Domain
 {
-    public class GetInvoicesRequest : IRequest<GetInvoicesResponse>
+    public class GetInvoicesRequest : RequestBase, IRequest<GetInvoicesResponse>
     {
 
     }

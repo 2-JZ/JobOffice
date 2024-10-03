@@ -37,6 +37,95 @@ namespace JobOffice.DataAcces.Migrations
                     b.ToTable("ContractorProject");
                 });
 
+            modelBuilder.Entity("Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BankAccountDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("InvoiceIssue")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDeadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Invoice");
+                });
+
+            modelBuilder.Entity("InvoiceItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DiscountValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("InvoiceItems");
+                });
+
             modelBuilder.Entity("JobOffice.DataAcces.Entities.CartItem", b =>
                 {
                     b.Property<int>("CartItemId")
@@ -240,86 +329,6 @@ namespace JobOffice.DataAcces.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("JobOffice.DataAcces.Entities.Invoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ContractorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("InvoiceIssue")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PaymentDeadline")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PaymentMethod")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContractorId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Invoice");
-                });
-
-            modelBuilder.Entity("JobOffice.DataAcces.Entities.InvoiceItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<float?>("Discount")
-                        .HasMaxLength(50)
-                        .HasColumnType("real");
-
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Quantity")
-                        .HasMaxLength(100)
-                        .HasColumnType("real");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("InvoiceItems");
                 });
 
             modelBuilder.Entity("JobOffice.DataAcces.Entities.Product", b =>
@@ -558,6 +567,32 @@ namespace JobOffice.DataAcces.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Invoice", b =>
+                {
+                    b.HasOne("JobOffice.DataAcces.Entities.Employee", null)
+                        .WithMany("Invoice")
+                        .HasForeignKey("EmployeeId");
+                });
+
+            modelBuilder.Entity("InvoiceItem", b =>
+                {
+                    b.HasOne("Invoice", "Invoice")
+                        .WithMany("Items")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobOffice.DataAcces.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("JobOffice.DataAcces.Entities.CartItem", b =>
                 {
                     b.HasOne("JobOffice.DataAcces.Entities.ShoppingCart", "ShoppingCart")
@@ -600,42 +635,6 @@ namespace JobOffice.DataAcces.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("JobOffice.DataAcces.Entities.Invoice", b =>
-                {
-                    b.HasOne("JobOffice.DataAcces.Entities.Contractor", "Contractor")
-                        .WithMany()
-                        .HasForeignKey("ContractorId");
-
-                    b.HasOne("JobOffice.DataAcces.Entities.Employee", "Employee")
-                        .WithMany("Invoice")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contractor");
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("JobOffice.DataAcces.Entities.InvoiceItem", b =>
-                {
-                    b.HasOne("JobOffice.DataAcces.Entities.Invoice", "Invoice")
-                        .WithMany()
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobOffice.DataAcces.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("JobOffice.DataAcces.Entities.Product", b =>
                 {
                     b.HasOne("JobOffice.DataAcces.Entities.Category", "Category")
@@ -675,6 +674,11 @@ namespace JobOffice.DataAcces.Migrations
                     b.HasOne("JobOffice.DataAcces.Entities.Category", null)
                         .WithMany("Tags")
                         .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("Invoice", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("JobOffice.DataAcces.Entities.Category", b =>

@@ -19,7 +19,7 @@ namespace JobOffice.ApplicationServices.API.Handlers
         }
         public async Task<AddInvoiceItemResponse> Handle(AddInvoiceItemRequest request, CancellationToken cancellationToken)
         {
-            var invoiceItem = this.mapper.Map<DataAcces.Entities.InvoiceItem>(request);
+            var invoiceItem = this.mapper.Map<JobOffice.DataAcces.Entities.InvoiceItem>(request);
             var command = new AddInvoiceItemCommand() { Parameter = invoiceItem };
             var invoiceItemFromDb = await this.commandExecutor.Execute(command);
 

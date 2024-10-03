@@ -16,11 +16,14 @@ using NLog.Web;
 using JobOffice.ApplicationServices.API.Domain.Models;
 using JobOffice.ApplicationServices.Components.ContactForm;
 using Microsoft.Extensions.Configuration;
+using Stripe;
 
 [assembly: ApiController]
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 var builder = WebApplication.CreateBuilder(args);
+var stripeApiKey = Environment.GetEnvironmentVariable("Stripe_ApiKey");
+
 
 // Configure logging
 builder.Logging.ClearProviders();
@@ -63,6 +66,8 @@ builder.Services.AddTransient<ICurrencyNbpConnector, CurrencyNbpConnector>();
 builder.Services.AddTransient<IHashingPassword, HashingPassword>();
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddScoped<IStripeService, StripeService>(provider =>
+        new StripeService(stripeApiKey));
 
 // FluentValidation setup
 builder.Services.AddMvcCore()

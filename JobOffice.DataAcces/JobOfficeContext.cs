@@ -29,5 +29,6 @@ namespace JobOffice.DataAcces
         public DbSet<ProductAttributes> Attributes { get; set; }   
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }   
         public DbSet<CartItem> CartItems { get; set; }   
+        public DbSet<Payment> Payments {  get; set; }
     }
 }
