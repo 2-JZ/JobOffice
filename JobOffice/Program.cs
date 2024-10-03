@@ -22,7 +22,12 @@ using Stripe;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 var builder = WebApplication.CreateBuilder(args);
-var stripeApiKey = Environment.GetEnvironmentVariable("Stripe_ApiKey");
+
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables()
+    .AddUserSecrets<Program>(); // <-- Add this line to include user secrets
 
 
 // Configure logging
@@ -66,10 +71,22 @@ builder.Services.AddTransient<ICurrencyNbpConnector, CurrencyNbpConnector>();
 builder.Services.AddTransient<IHashingPassword, HashingPassword>();
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddTransient<IEmailService, EmailService>();
-builder.Services.AddScoped<IStripeService, StripeService>(provider =>
-        new StripeService(stripeApiKey));
 
-// FluentValidation setup
+// Retrieve Stripe API key from environment variables or user secrets
+//var stripeApiKey = builder.Configuration["Stripe:ApiKey"]; // <-- Access the Stripe key here
+
+//if (string.IsNullOrEmpty(stripeApiKey))
+//{
+//    throw new InvalidOperationException("Stripe API key is not set in environment variables, user secrets, or appsettings.json.");
+//}
+
+//// Add Stripe service to the container
+//builder.Services.AddScoped<IStripeService, StripeService>(provider =>
+//    new StripeService(stripeApiKey));
+
+builder.Services.AddScoped<IStripeService, StripeService>();
+
+
 builder.Services.AddMvcCore()
     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddCategoryRequest>());
 

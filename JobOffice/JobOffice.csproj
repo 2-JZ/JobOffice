@@ -4,7 +4,10 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-	</PropertyGroup>
+				<UserSecretsId>JobOffice-Stripe-Secrets</UserSecretsId>
+		
+	  <UserSecretsId>cecbb9fa-18a6-4ae0-b1ad-4c2ac1e84b08</UserSecretsId>
+  </PropertyGroup>
 	
 	<ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
