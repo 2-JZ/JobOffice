@@ -40,12 +40,12 @@ public class ShoppingCartController : ApiControllerBase
 
     [HttpPost]
     [Route("{cartId}/items")]
-    public Task<IActionResult> AddItemToCart([FromRoute]int cartId,[FromBody] AddItemToCartRequest request)
+    public Task<IActionResult> AddItemToCart([FromRoute] int cartId, [FromBody] AddItemToCartRequest request)
     {
         request.CartId = cartId;
         return this.HandleRequest<AddItemToCartRequest, AddItemToCartResponse>(request);
     }
- 
+
     [HttpDelete]
     [Route("{cartId}/items/{productId}")]
     public async Task<IActionResult> RemoveItemFromCart([FromRoute] int cartId, [FromRoute] int productId)

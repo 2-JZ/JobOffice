@@ -1,40 +1,42 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Stripe;
 
 [ApiController]
-[Route("api/webhooks")]
+[Route("webhooks/stripe")]
 public class StripeWebhookController : ControllerBase
 {
+    private readonly IMediator mediator;
+
+    public StripeWebhookController(IMediator mediator)
+    {
+        this.mediator = mediator;
+    }
+
     [HttpPost]
     public async Task<IActionResult> Handle()
     {
-        var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+        var json = await new StreamReader(Request.Body).ReadToEndAsync();
 
-        try
+        var stripeEvent = EventUtility.ConstructEvent(
+            json,
+            Request.Headers["Stripe-Signature"],
+            "STRIPE_WEBHOOK_SECRET"
+        );
+
+        if (stripeEvent.Type == Events.PaymentIntentSucceeded)
         {
-            var stripeEvent = EventUtility.ConstructEvent(
-                json,
-                Request.Headers["Stripe-Signature"],
-                "your_stripe_webhook_secret"
-            );
+            var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
 
-            // Handle the event (e.g., payment success or failure)
-            if (stripeEvent.Type == Events.PaymentIntentSucceeded)
-            {
-                var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
-                // Handle successful payment (e.g., mark order as paid)
-            }
-            else if (stripeEvent.Type == Events.PaymentIntentPaymentFailed)
-            {
-                var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
-                // Handle payment failure
-            }
+            //await mediator.Send(new CreateInvoiceFromStripeRequest
+            //{
+            //    PaymentIntentId = paymentIntent.Id,
+            //    Amount = paymentIntent.AmountReceived / 100m,
+            //    Currency = paymentIntent.Currency,
+            //    Email = paymentIntent.ReceiptEmail
+            //});
+        }
 
-            return Ok();
-        }
-        catch (StripeException e)
-        {
-            return BadRequest();
-        }
+        return Ok();
     }
 }
